@@ -29,7 +29,7 @@ const About = () => {
     <PageTransition>
       <Layout>
         {/* HERO */}
-        <section className="relative pt-36 pb-20 warm-section overflow-hidden fabric-texture">
+        <section className="relative section-hero bg-[#fff6e8] overflow-hidden fabric-texture">
           <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/20 blur-[100px]" />
           <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-amber-300/25 blur-[100px]" />
           <div className="container-width px-4 sm:px-6 lg:px-8 relative">

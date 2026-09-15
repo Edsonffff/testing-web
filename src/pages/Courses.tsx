@@ -16,6 +16,7 @@ import {
   FileText,
   UserCheck,
   Building,
+  GraduationCap,
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { PageTransition, AnimatedSection, AnimatedText, AnimatedCard } from "@/components/animations";
@@ -200,30 +201,28 @@ const Courses = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="section-padding bg-[#fff1dc]">
-          <div className="container-width">
+        <section className="relative bg-[#fff6e8] overflow-hidden fabric-texture">
+          <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/15 blur-[100px]" />
+          <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-amber-300/20 blur-[100px]" />
+          <div className="container-width section-hero relative z-10">
             <div className="text-center max-w-3xl mx-auto">
-              <AnimatedSection>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-success text-success-foreground rounded-full text-sm font-medium mb-6">
-                  <Award className="w-4 h-4" />
-                  <span>Government Certified Programs</span>
-                </div>
-              </AnimatedSection>
-              <AnimatedText as="h1" delay={0.1} zoom className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
-                Free Skill Development{" "}
-                <span className="text-primary">Courses</span>
+              <div className="warm-badge inline-block mb-6">
+                <GraduationCap className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />
+                Government Certified Programs
+              </div>
+              <AnimatedText as="h1" delay={0.1} zoom className="text-4xl md:text-6xl font-display font-bold text-orange-950 mb-6 leading-[1.05]">
+                Free Skill <span className="text-gradient-warm italic">Courses</span>
               </AnimatedText>
-              <AnimatedText as="p" delay={0.2} className="text-lg text-muted-foreground">
+              <AnimatedText as="p" delay={0.2} className="text-lg md:text-xl text-orange-900/75 leading-relaxed">
                 Empowering women and youth with job-ready skills through our
-                comprehensive training programs. All courses are designed for
-                self-employment and sustainable livelihoods.
+                comprehensive training programs — all 100% free with government stipends.
               </AnimatedText>
             </div>
           </div>
         </section>
 
         {/* Courses List */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="space-y-16">
               {courses.map((course, index) => (
@@ -295,7 +294,7 @@ const Courses = () => {
                           {course.highlights.map((highlight, hIndex) => (
                             <motion.div
                               key={highlight.label}
-                              className="bg-card rounded-xl p-4 text-center card-shadow"
+                              className="warm-card rounded-2xl p-5 text-center card-shadow"
                               initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
                               whileInView={{ opacity: 1, y: 0 }}
                               viewport={{ once: true }}
@@ -349,7 +348,7 @@ const Courses = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="section-padding bg-[#fff1dc]">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedText as="h2" zoom className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
@@ -408,7 +407,7 @@ const Courses = () => {
         </section>
 
         {/* Training Locations */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedSection>
@@ -492,7 +491,7 @@ const Courses = () => {
         </section>
 
         {/* Eligibility Section */}
-        <section className="section-padding bg-[#fff1dc]">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedText as="h2" zoom className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">

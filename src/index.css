@@ -112,6 +112,23 @@
   }
 }
 
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-14 md:py-20;
+    padding-top: 8rem;
+  }
+
+  .section-hero {
+    @apply px-4 sm:px-6 lg:px-8;
+    padding-top: 9rem;
+    padding-bottom: 4rem;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
 /* ═══════════════════════════════════════════
    WARM ORANGE HERO GRADIENT BACKGROUND
    Matches the reference: deep orange top → bright yellow-orange bottom
@@ -320,21 +337,23 @@
 
 /* Section card below hero: warm light background */
 .warm-section {
-  background: linear-gradient(180deg, #fff6e8 0%, #ffe9cc 100%);
+  background: #fff6e8;
 }
 
 .warm-section-alt {
-  background: linear-gradient(180deg, #ffe9cc 0%, #ffd9a3 100%);
+  background: #fff1dc;
 }
 
 .warm-card {
   background: #ffffff;
   border-radius: 1.5rem;
   box-shadow:
-    0 20px 50px -20px rgba(180, 80, 10, 0.25),
-    0 4px 12px -4px rgba(180, 80, 10, 0.1);
-  border: 1px solid rgba(255, 180, 100, 0.2);
+    0 10px 30px -10px rgba(180, 80, 10, 0.18),
+    0 2px 8px -2px rgba(180, 80, 10, 0.08);
+  border: 1px solid rgba(255, 220, 180, 0.6);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  isolation: isolate;
 }
 
 .warm-card:hover {
@@ -361,6 +380,14 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, #ff7a1a 0%, #ff5c00 50%, #ea580c 100%);
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, #ff7a1a 0%, #ff9f2e 100%);
 }
 
 /* Custom scrollbar — warm orange */

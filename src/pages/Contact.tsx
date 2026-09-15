@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageCircle } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   PageTransition,
@@ -95,24 +95,32 @@ Message: ${formData.message}
     <PageTransition>
       <Layout>
         {/* HEADER */}
-        <section className="section-padding bg-[#fff1dc] text-center">
-          <AnimatedText
-            as="h1"
-            zoom
-            className="text-4xl md:text-5xl font-bold"
-          >
-            Contact <span className="text-primary">Us</span>
-          </AnimatedText>
-          <p className="mt-4 text-muted-foreground">
-            Have questions? Send us a WhatsApp message.
-          </p>
+        <section className="relative bg-[#fff6e8] overflow-hidden fabric-texture">
+          <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/15 blur-[100px]" />
+          <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-amber-300/20 blur-[100px]" />
+          <div className="container-width section-hero text-center relative z-10">
+            <div className="warm-badge inline-block mb-6">
+              <MessageCircle className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />
+              Get in Touch
+            </div>
+            <AnimatedText
+              as="h1"
+              zoom
+              className="text-4xl md:text-6xl font-display font-bold text-orange-950 mb-4 leading-[1.05]"
+            >
+              Contact <span className="text-gradient-warm italic">Us</span>
+            </AnimatedText>
+            <p className="mt-4 text-lg md:text-xl text-orange-900/75 max-w-xl mx-auto leading-relaxed">
+              Have questions? Send us a WhatsApp message — we'd love to hear from you.
+            </p>
+          </div>
         </section>
 
         {/* CONTENT */}
         <section className="section-padding">
           <div className="container-width grid lg:grid-cols-2 gap-12">
             {/* FORM */}
-            <AnimatedCard className="p-8 rounded-2xl bg-card">
+            <AnimatedCard className="warm-card p-8 rounded-2xl">
               {isSubmitted ? (
                 <div className="text-center py-10">
                   <CheckCircle className="w-16 h-16 mx-auto text-green-600" />
@@ -227,7 +235,7 @@ Message: ${formData.message}
             <div className="space-y-4">
               {contactInfo.map((item, i) => (
                 <AnimatedSection key={i} direction="left">
-                  <div className="flex gap-4 p-4 bg-card rounded-xl">
+                  <div className="flex gap-4 p-4 warm-card rounded-2xl p-6">
                     <item.icon className="w-6 h-6 text-primary" />
                     <div>
                       <p className="font-semibold">{item.label}</p>
