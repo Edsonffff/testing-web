@@ -12,7 +12,6 @@ import Gallery from "./pages/Gallery";
 import Infrastructure from "./pages/Infrastructure";
 import Contact from "./pages/Contact";
 import Donation from "./pages/Donation";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import NotFound from "./pages/NotFound";
 
@@ -41,7 +40,6 @@ function AnimatedRoutes() {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <CustomCursor />
       <ScrollProgress />
       <Toaster />
       <Sonner />

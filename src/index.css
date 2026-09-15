@@ -110,13 +110,6 @@
     font-family: 'Playfair Display', 'DM Sans', Georgia, serif;
     letter-spacing: -0.02em;
   }
-
-  /* Hide default cursor when custom cursor is active */
-  @media (hover: hover) and (pointer: fine) {
-    * {
-      cursor: none !important;
-    }
-  }
 }
 
 /* ═══════════════════════════════════════════
