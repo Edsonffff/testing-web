@@ -1,11 +1,10 @@
 "use client";
 
 /**
- * Premium sewing-needle cursor with a silky orange thread that trails behind.
- *
- * The needle tip tracks the mouse tightly. The thread starts at the needle's eye
- * and flows through a chain of loose springs, producing a smooth curving tail
- * just like real thread trailing through fabric.
+ * Iridescent/holographic sewing-needle cursor with silky pink-purple thread.
+ * Holographic gradients are built from conic/linear combinations of purple,
+ * pink, lavender and cream to evoke a hologram/foil look, with a soft
+ * animated shimmer across the needle surface.
  */
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -148,7 +147,7 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Warm glow behind the needle */}
+      {/* Iridescent glow behind the needle */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9997] mix-blend-screen"
         style={{ x: tipSX, y: tipSY, translateX: "-50%", translateY: "-50%" }}
@@ -156,26 +155,26 @@ export function CustomCursor() {
         <motion.div
           className="rounded-full"
           animate={{
-            width: isHovering ? 70 : 44,
-            height: isHovering ? 70 : 44,
-            opacity: isHovering ? 0.45 : 0.22,
+            width: isHovering ? 80 : 50,
+            height: isHovering ? 80 : 50,
+            opacity: isHovering ? 0.55 : 0.3,
           }}
           transition={{ duration: 0.3 }}
           style={{
             background:
-              "radial-gradient(circle, rgba(255,190,90,0.75) 0%, rgba(255,120,20,0.3) 45%, transparent 75%)",
-            filter: "blur(12px)",
+              "radial-gradient(circle, rgba(236,72,153,0.65) 0%, rgba(168,85,247,0.4) 40%, rgba(217,70,239,0.2) 65%, transparent 80%)",
+            filter: "blur(14px)",
           }}
         />
       </motion.div>
 
-      {/* Thread tail — drawn as a stack of tapering circles following the spring chain.
-          Each circle is slightly larger/thicker near the needle and fades toward the end. */}
+      {/* Thread tail — holographic pink→purple gradient, tapers along the spring chain. */}
       {springsX.map((sx, i) => {
         const t = i / (THREAD_LEN - 1);
-        const thickness = 5.5 - t * 4.8; // thick -> thin
+        const thickness = 5.5 - t * 4.8;
         const opacity = 0.95 - t * 0.75;
-        const hue = 32 + t * 10; // tiny hue shift along tail
+        // Pink near needle -> purple towards tip
+        const hue = 320 - t * 60; // 320 (pink) -> 260 (purple)
         return (
           <motion.div
             key={`thr-${i}`}
@@ -197,9 +196,9 @@ export function CustomCursor() {
               }}
               transition={{ duration: 0.2 }}
               style={{
-                background: `radial-gradient(circle, hsl(${hue},100%,75%) 0%, hsl(28,100%,58%) 55%, hsla(24,95%,48%,${opacity}) 100%)`,
+                background: `radial-gradient(circle, hsl(${hue+20},100%,82%) 0%, hsl(${hue},90%,65%) 50%, hsla(${hue-10},85%,55%,${opacity}) 100%)`,
                 boxShadow:
-                  i < 3 ? "0 0 6px rgba(255,160,50,0.6)" : "none",
+                  i < 3 ? "0 0 8px rgba(217,70,239,0.6)" : "none",
               }}
             />
           </motion.div>
@@ -234,22 +233,32 @@ export function CustomCursor() {
           overflow="visible"
         >
           <defs>
-            <linearGradient id="nGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="20%" stopColor="#f0f0f0" />
-              <stop offset="55%" stopColor="#bfbfbf" />
-              <stop offset="80%" stopColor="#7a7a7a" />
-              <stop offset="100%" stopColor="#3a3a3a" />
+            {/* Iridescent holographic gradient — deep purple → magenta → pink → lavender → cream */}
+            <linearGradient id="holoGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#a855f7" />
+              <stop offset="20%" stopColor="#d946ef" />
+              <stop offset="45%" stopColor="#ec4899" />
+              <stop offset="65%" stopColor="#f0abfc" />
+              <stop offset="82%" stopColor="#fbcfe8" />
+              <stop offset="100%" stopColor="#fef3c7" />
             </linearGradient>
-            <linearGradient id="nSheen" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.95)" />
+            {/* Moving shimmer band — animated horizontally for foil/hologram effect */}
+            <linearGradient id="holoSheen" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="45%" stopColor="rgba(255,255,255,0.75)" />
+              <stop offset="55%" stopColor="rgba(255,255,255,0.85)" />
               <stop offset="100%" stopColor="rgba(255,255,255,0)" />
             </linearGradient>
-            <filter id="nShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
-              <feOffset dx="0.5" dy="1" result="off" />
+            {/* Darker edge gradient to give the needle 3D bevel */}
+            <linearGradient id="holoEdge" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0%" stopColor="rgba(88,28,135,0.55)" />
+              <stop offset="100%" stopColor="rgba(190,24,93,0)" />
+            </linearGradient>
+            <filter id="holoShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" />
+              <feOffset dx="0.5" dy="1.5" result="off" />
               <feComponentTransfer>
-                <feFuncA type="linear" slope="0.4" />
+                <feFuncA type="linear" slope="0.45" />
               </feComponentTransfer>
               <feMerge>
                 <feMergeNode />
@@ -258,9 +267,8 @@ export function CustomCursor() {
             </filter>
           </defs>
 
-          {/* Needle drawn pointing straight down; tip at (0,0). */}
-          <g filter="url(#nShadow)">
-            {/* Main tapered shaft */}
+          <g filter="url(#holoShadow)">
+            {/* Main tapered shaft filled with holographic gradient */}
             <path
               d={`
                 M 0 0
@@ -275,58 +283,62 @@ export function CustomCursor() {
                 L -${NEEDLE_WIDTH / 2} 10
                 Z
               `}
-              fill="url(#nGrad)"
-              stroke="rgba(0,0,0,0.25)"
-              strokeWidth="0.3"
+              fill="url(#holoGrad)"
             />
 
-            {/* Bright sheen down one side */}
+            {/* Dark bevel edge on the right side for 3D depth */}
             <path
               d={`
-                M -0.8 2
-                L -1.2 ${EYE_Y_FROM_TIP - EYE_SIZE_Y - 3}
-                L -1.6 ${NEEDLE_LENGTH - 5}
-                L -2 ${NEEDLE_LENGTH - 3}
+                M ${NEEDLE_WIDTH / 2 - 0.2} 10
+                L ${NEEDLE_WIDTH / 2 - 0.2} ${EYE_Y_FROM_TIP - EYE_SIZE_Y - 2}
+                Q ${NEEDLE_WIDTH / 2 + 0.6} ${EYE_Y_FROM_TIP - 1}, ${NEEDLE_WIDTH / 2 - 0.2} ${EYE_Y_FROM_TIP + EYE_SIZE_Y + 2}
+                L ${NEEDLE_WIDTH / 2 - 0.2} ${NEEDLE_LENGTH}
+                L ${NEEDLE_WIDTH / 2 - 0.8} ${NEEDLE_LENGTH + 2}
                 Z
               `}
-              fill="url(#nSheen)"
-              opacity="0.8"
+              fill="url(#holoEdge)"
             />
 
-            {/* Sharp tip glint */}
-            <path d="M 0 0 L 1.2 4 L -1.2 4 Z" fill="rgba(255,255,255,0.95)" />
+            {/* Animated shimmer band */}
+            <clipPath id="needleClip">
+              <path d={`
+                M 0 0
+                L ${NEEDLE_WIDTH / 2} 10
+                L ${NEEDLE_WIDTH / 2} ${NEEDLE_LENGTH}
+                L 0 ${NEEDLE_LENGTH + 6}
+                L -${NEEDLE_WIDTH / 2} ${NEEDLE_LENGTH}
+                L -${NEEDLE_WIDTH / 2} 10
+                Z
+              `} />
+            </clipPath>
+            <g clipPath="url(#needleClip)">
+              <rect
+                x={-NEEDLE_WIDTH}
+                y={0}
+                width={NEEDLE_WIDTH * 2}
+                height={NEEDLE_LENGTH + 10}
+                fill="url(#holoSheen)"
+              >
+                <animate
+                  attributeName="x"
+                  from={-NEEDLE_WIDTH * 2}
+                  to={NEEDLE_WIDTH}
+                  dur="2.4s"
+                  repeatCount="indefinite"
+                />
+              </rect>
+            </g>
 
-            {/* Eye hole */}
-            <ellipse
-              cx={0}
-              cy={EYE_Y_FROM_TIP}
-              rx={EYE_SIZE_X}
-              ry={EYE_SIZE_Y}
-              fill="#1a0f00"
-            />
-            <ellipse
-              cx={0}
-              cy={EYE_Y_FROM_TIP}
-              rx={EYE_SIZE_X - 0.7}
-              ry={EYE_SIZE_Y - 1.2}
-              fill="#5a3820"
-            />
-            {/* Orange thread passing through the eye */}
-            <ellipse
-              cx={0}
-              cy={EYE_Y_FROM_TIP}
-              rx={EYE_SIZE_X - 1}
-              ry={EYE_SIZE_Y - 2.2}
-              fill="#ff9a2e"
-            />
-            <ellipse
-              cx={-0.3}
-              cy={EYE_Y_FROM_TIP - 0.5}
-              rx={EYE_SIZE_X - 1.4}
-              ry={EYE_SIZE_Y - 3}
-              fill="#ffd085"
-              opacity="0.7"
-            />
+            {/* Tip highlight — bright iridescent glint */}
+            <path d="M 0 0 L 1.4 5 L -1.4 5 Z" fill="rgba(255,255,255,0.95)" />
+            <path d="M 0 0 L 0.6 3 L -0.3 3 Z" fill="#fef3c7" />
+
+            {/* Eye hole — dark with purple tint */}
+            <ellipse cx={0} cy={EYE_Y_FROM_TIP} rx={EYE_SIZE_X} ry={EYE_SIZE_Y} fill="#2a0a3a" />
+            <ellipse cx={0} cy={EYE_Y_FROM_TIP} rx={EYE_SIZE_X - 0.7} ry={EYE_SIZE_Y - 1.2} fill="#6b21a8" />
+            {/* Pink-magenta thread through the eye (matches trail) */}
+            <ellipse cx={0} cy={EYE_Y_FROM_TIP} rx={EYE_SIZE_X - 1} ry={EYE_SIZE_Y - 2.2} fill="#ec4899" />
+            <ellipse cx={-0.3} cy={EYE_Y_FROM_TIP - 0.5} rx={EYE_SIZE_X - 1.4} ry={EYE_SIZE_Y - 3} fill="#fbcfe8" opacity="0.8" />
           </g>
         </svg>
       </motion.div>
@@ -344,7 +356,7 @@ export function CustomCursor() {
             className="w-4 h-4 rounded-full"
             style={{
               background:
-                "radial-gradient(circle, #fffbe5 0%, #ffd27a 40%, transparent 70%)",
+                "radial-gradient(circle, #fffbe5 0%, #f0abfc 40%, transparent 70%)",
             }}
           />
         </motion.div>

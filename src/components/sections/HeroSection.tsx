@@ -295,38 +295,7 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            <motion.nav
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="hidden md:flex items-center rounded-full px-2 py-1.5 gap-1"
-              style={{
-                background: "rgba(30,15,0,0.35)",
-                backdropFilter: "blur(20px) saturate(150%)",
-                WebkitBackdropFilter: "blur(20px) saturate(150%)",
-                border: "1px solid rgba(255,200,150,0.2)",
-                boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
-              }}
-            >
-              {[
-                { name: "HOME", to: "/" },
-                { name: "COURSES", to: "/courses" },
-                { name: "ABOUT US", to: "/about" },
-                { name: "CONTACT", to: "/contact" },
-              ].map((l, i) => (
-                <Link
-                  key={l.to}
-                  to={l.to}
-                  className={`px-5 py-2 text-sm rounded-full transition-all duration-300 ${
-                    i === 0
-                      ? "bg-white text-neutral-900 font-bold shadow-md"
-                      : "text-white/85 hover:text-white hover:bg-white/15 font-semibold"
-                  }`}
-                >
-                  {l.name}
-                </Link>
-              ))}
-            </motion.nav>
+            <div className="hidden md:block" />
 
             <motion.div
               initial={{ opacity: 0, x: 20 }}

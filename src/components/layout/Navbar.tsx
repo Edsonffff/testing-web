@@ -31,34 +31,32 @@ export function Navbar() {
     setIsOpen(false);
   }, [location.pathname]);
 
-  const isHome = location.pathname === "/";
-
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled || !isHome
-          ? "pt-3"
-          : "pt-5"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 pt-3 px-4 sm:px-6"
       initial={prefersReducedMotion ? {} : { y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Floating warm-glass pill bar once scrolled (or on non-home pages) */}
+      <div className="max-w-7xl mx-auto">
+        {/* Colorless (neutral) glass pill bar */}
         <div
-          className={`flex items-center justify-between transition-all duration-500 ${
-            isScrolled || !isHome
-              ? "glass-warm rounded-full px-4 sm:px-6 py-2 shadow-2xl"
-              : "rounded-full px-2 py-2"
-          }`}
+          className="flex items-center justify-between rounded-full px-4 sm:px-6 py-2 transition-all duration-500"
+          style={{
+            background: "rgba(255,255,255,0.55)",
+            backdropFilter: "blur(22px) saturate(150%)",
+            WebkitBackdropFilter: "blur(22px) saturate(150%)",
+            border: "1px solid rgba(255,255,255,0.7)",
+            boxShadow:
+              "0 10px 40px -15px rgba(0,0,0,0.15), 0 2px 8px -2px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
+          }}
         >
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <motion.div
               whileHover={prefersReducedMotion ? {} : { scale: 1.08, rotate: -5 }}
               transition={{ duration: 0.25 }}
-              className="w-10 h-10 rounded-full bg-white shadow-lg overflow-hidden ring-2 ring-white/50"
+              className="w-10 h-10 rounded-full overflow-hidden shadow-md ring-2 ring-white"
             >
               <img
                 src={logo}
@@ -67,20 +65,10 @@ export function Navbar() {
               />
             </motion.div>
             <div className="hidden sm:block">
-              <h1
-                className={`text-base font-extrabold leading-tight tracking-tight transition-colors ${
-                  isScrolled || !isHome ? "text-white" : "text-white"
-                }`}
-              >
+              <h1 className="text-base font-extrabold leading-tight tracking-tight text-neutral-900">
                 Kiruba Trust
               </h1>
-              <p
-                className={`text-[10px] font-semibold tracking-widest uppercase transition-colors ${
-                  isScrolled || !isHome
-                    ? "text-amber-200"
-                    : "text-white/80"
-                }`}
-              >
+              <p className="text-[10px] font-semibold tracking-widest uppercase text-neutral-500">
                 Education · Charity
               </p>
             </div>
@@ -96,10 +84,8 @@ export function Navbar() {
                   to={link.path}
                   className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-all duration-250 ${
                     active
-                      ? "bg-white text-orange-700 shadow-md"
-                      : isScrolled || !isHome
-                        ? "text-white/90 hover:text-white hover:bg-white/15"
-                        : "text-white/90 hover:text-white hover:bg-white/15"
+                      ? "bg-neutral-900 text-white shadow-md"
+                      : "text-neutral-700 hover:text-neutral-900 hover:bg-neutral-900/5"
                   }`}
                 >
                   {link.name}
@@ -112,11 +98,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href="tel:9442301105"
-              className={`flex items-center gap-1.5 text-sm font-semibold transition-colors ${
-                isScrolled || !isHome
-                  ? "text-white/90 hover:text-white"
-                  : "text-white/90 hover:text-white"
-              }`}
+              className="flex items-center gap-1.5 text-sm font-semibold text-neutral-700 hover:text-neutral-900 transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
               <span>9442301105</span>
@@ -127,7 +109,7 @@ export function Navbar() {
             >
               <Button
                 asChild
-                className="rounded-full bg-white text-orange-700 hover:bg-amber-50 font-bold px-5 shadow-lg"
+                className="rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:shadow-lg font-bold px-5"
               >
                 <Link to="/contact">
                   <Heart className="w-3.5 h-3.5 mr-1.5" />
@@ -139,7 +121,7 @@ export function Navbar() {
 
           {/* Mobile menu button */}
           <motion.button
-            className="lg:hidden w-10 h-10 rounded-full bg-white/20 backdrop-blur text-white flex items-center justify-center"
+            className="lg:hidden w-10 h-10 rounded-full bg-neutral-900/5 backdrop-blur text-neutral-800 flex items-center justify-center hover:bg-neutral-900/10 transition"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
             whileTap={prefersReducedMotion ? {} : { scale: 0.92 }}
@@ -151,10 +133,17 @@ export function Navbar() {
         {/* Mobile menu */}
         {isOpen && (
           <motion.div
-            className="lg:hidden mt-2 glass-warm rounded-3xl p-4"
+            className="lg:hidden mt-2 rounded-3xl p-4"
             initial={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
+            style={{
+              background: "rgba(255,255,255,0.85)",
+              backdropFilter: "blur(22px)",
+              WebkitBackdropFilter: "blur(22px)",
+              border: "1px solid rgba(255,255,255,0.7)",
+              boxShadow: "0 20px 40px -15px rgba(0,0,0,0.15)",
+            }}
           >
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => {
@@ -165,8 +154,8 @@ export function Navbar() {
                     to={link.path}
                     className={`px-4 py-3 rounded-2xl font-semibold text-sm transition ${
                       active
-                        ? "bg-white text-orange-700"
-                        : "text-white hover:bg-white/15"
+                        ? "bg-neutral-900 text-white"
+                        : "text-neutral-800 hover:bg-neutral-900/5"
                     }`}
                   >
                     {link.name}
@@ -176,7 +165,7 @@ export function Navbar() {
               <div className="pt-2 flex gap-2">
                 <Button
                   asChild
-                  className="flex-1 rounded-full bg-white text-orange-700 hover:bg-amber-50 font-bold"
+                  className="flex-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold"
                 >
                   <Link to="/contact" onClick={() => setIsOpen(false)}>
                     Enroll Now
