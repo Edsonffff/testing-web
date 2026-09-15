@@ -95,7 +95,7 @@ Message: ${formData.message}
     <PageTransition>
       <Layout>
         {/* HEADER */}
-        <section className="section-padding bg-secondary text-center">
+        <section className="section-padding bg-[#fff1dc] text-center">
           <AnimatedText
             as="h1"
             zoom

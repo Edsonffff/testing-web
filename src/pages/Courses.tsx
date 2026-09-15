@@ -200,7 +200,7 @@ const Courses = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto">
               <AnimatedSection>
@@ -349,7 +349,7 @@ const Courses = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedText as="h2" zoom className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
@@ -492,7 +492,7 @@ const Courses = () => {
         </section>
 
         {/* Eligibility Section */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedText as="h2" zoom className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">

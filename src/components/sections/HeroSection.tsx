@@ -1,490 +1,520 @@
-import { useRef, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Star, ArrowRight, Award, ArrowDown, Sparkles } from "lucide-react";
-import { motion, useReducedMotion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
-import { TiltCard } from "@/components/ui/TiltCard";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBag,
+  Heart,
+  Instagram,
+  Facebook,
+  Youtube,
+  Scissors,
+  Sparkles,
+  Star,
+  GraduationCap,
+  Users,
+  Award,
+} from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import heroImage from "@/assets/hero-tailoring.jpg";
-import mrFranklin from "@/assets/mr-franklin.png";
+import tailoringCourse from "@/assets/tailoring-course.jpg";
+import aariWork from "@/assets/aari-work.jpg";
+import beautician from "@/assets/beautician-course.png";
 
-// Helper: split text into characters for staggered animation
-function AnimatedLetters({
-  text,
-  className,
-  delay = 0,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-}) {
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.035,
-        delayChildren: delay,
-      },
-    },
-  };
-
-  const child: Variants = {
-    hidden: { opacity: 0, y: 50, rotateX: -40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 200,
-      },
-    },
-  };
-
-  return (
-    <motion.span
-      className={className}
-      variants={container}
-      initial="hidden"
-      animate="visible"
-      aria-label={text}
-      style={{ display: "block", perspective: "600px" }}
-    >
-      {text.split("").map((char, i) => (
-        <motion.span
-          key={`${char}-${i}`}
-          variants={child}
-          style={{ display: "inline-block", willChange: "transform, opacity" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
-}
-
-// Generate star positions deterministically
-function useStarField(count: number) {
-  return useMemo(() => {
-    const stars: Array<{
-      top: string;
-      left: string;
-      size: number;
-      duration: string;
-      delay: string;
-      color: string;
-    }> = [];
-    for (let i = 0; i < count; i++) {
-      const seed1 = ((i * 137 + 97) % 100);
-      const seed2 = ((i * 251 + 43) % 100);
-      stars.push({
-        top: `${seed1}%`,
-        left: `${seed2}%`,
-        size: 1.5 + (i % 4) * 0.8,
-        duration: `${2 + (i % 5) * 0.8}s`,
-        delay: `${(i % 7) * 0.5}s`,
-        color:
-          i % 3 === 0
-            ? "rgba(192, 132, 252, 0.7)"
-            : i % 3 === 1
-              ? "rgba(244, 114, 182, 0.6)"
-              : "rgba(255, 255, 255, 0.5)",
-      });
-    }
-    return stars;
-  }, [count]);
-}
+const heroSlides = [
+  {
+    tag: "Tailoring",
+    eyebrow: "FREE GOVT. CERTIFIED COURSE",
+    title: "Stitch your",
+    titleAccent: "Dream Career",
+    body:
+      "It's not just about needle and thread. It's about stepping into confidence, creativity, and a craft that lasts a lifetime. Learn professional tailoring with ₹12,000 stipend support.",
+    cta: "Start Stitching",
+    ctaTo: "/courses",
+    image: tailoringCourse,
+    tagline: "Crafted with care, worn with pride",
+    price: "Free",
+    priceOld: "₹15,000",
+    chips: ["6", "Months", "Certified"],
+  },
+  {
+    tag: "Aari Work",
+    eyebrow: "TRADITIONAL ARTISTRY",
+    title: "Design with",
+    titleAccent: "Golden Hands",
+    body:
+      "Master the timeless art of bridal aari, zardosi and bead embroidery. Turn fabric into heirlooms and passion into a profession with expert mentorship.",
+    cta: "Explore Aari",
+    ctaTo: "/courses",
+    image: aariWork,
+    tagline: "Every stitch tells a story",
+    price: "Free",
+    priceOld: "₹12,000",
+    chips: ["3", "Months", "Bridal"],
+  },
+  {
+    tag: "Beautician",
+    eyebrow: "BEAUTY & WELLNESS",
+    title: "Glow up",
+    titleAccent: "Your Future",
+    body:
+      "Professional beautician training covering skin, hair, makeup and salon management. Walk out with a government certificate and the confidence to launch your own studio.",
+    cta: "Join Beauty",
+    ctaTo: "/courses",
+    image: beautician,
+    tagline: "Confidence, stitched into every lesson",
+    price: "Free",
+    priceOld: "₹18,000",
+    chips: ["6", "Months", "Studio-Ready"],
+  },
+];
 
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const stars = useStarField(12);
 
-  // Mouse position tracking for parallax
+  // Mouse parallax
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  const smoothMouseX = useSpring(mouseX, { damping: 60, stiffness: 80 }); // Throttled for performance
-  const smoothMouseY = useSpring(mouseY, { damping: 60, stiffness: 80 });
-
-  // Parallax transforms at different speeds for each orb
-  const orb1X = useTransform(smoothMouseX, [-0.5, 0.5], [-40, 40]);
-  const orb1Y = useTransform(smoothMouseY, [-0.5, 0.5], [-30, 30]);
-  const orb2X = useTransform(smoothMouseX, [-0.5, 0.5], [30, -30]);
-  const orb2Y = useTransform(smoothMouseY, [-0.5, 0.5], [25, -25]);
-  const orb3X = useTransform(smoothMouseX, [-0.5, 0.5], [-20, 20]);
-  const orb3Y = useTransform(smoothMouseY, [-0.5, 0.5], [-15, 15]);
-
-  // Grid parallax (subtle)
-  const gridX = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
-  const gridY = useTransform(smoothMouseY, [-0.5, 0.5], [-10, 10]);
-
-  // Particle parallax
-  const particleX = useTransform(smoothMouseX, [-0.5, 0.5], [-15, 15]);
-  const particleY = useTransform(smoothMouseY, [-0.5, 0.5], [-15, 15]);
+  const smoothX = useSpring(mouseX, { damping: 50, stiffness: 90 });
+  const smoothY = useSpring(mouseY, { damping: 50, stiffness: 90 });
+  const imgX = useTransform(smoothX, [-0.5, 0.5], [-15, 15]);
+  const imgY = useTransform(smoothY, [-0.5, 0.5], [-12, 12]);
+  const cardX = useTransform(smoothX, [-0.5, 0.5], [8, -8]);
+  const cardY = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
+  const blob1X = useTransform(smoothX, [-0.5, 0.5], [-25, 25]);
+  const blob2X = useTransform(smoothX, [-0.5, 0.5], [20, -20]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!sectionRef.current) return;
     const rect = sectionRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
+  // Auto rotate slides gently
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const t = setInterval(() => {
+      setActive((a) => (a + 1) % heroSlides.length);
+    }, 7000);
+    return () => clearInterval(t);
+  }, [prefersReducedMotion]);
+
+  const slide = heroSlides[active];
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center overflow-hidden bg-neutral-950 pt-20"
+      className="relative min-h-screen flex items-center justify-center warm-gradient-bg overflow-hidden pt-28 pb-16 px-4 sm:px-6 lg:px-10"
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
-      {/* ═══════ AURORA GRADIENT MESH ═══════ */}
-      <div className="absolute inset-0 aurora-mesh pointer-events-none" />
-
-      {/* ═══════ ANIMATED GRADIENT ORBS ═══════ */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Decorative floating blobs for depth */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-purple-600/10 blur-[80px] will-change-transform" /* Lower opacity and blur */
-          style={{ x: orb1X, y: orb1Y }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-24 -left-24 w-[380px] h-[380px] rounded-full bg-amber-300/40 blur-[100px] animate-blob-pulse"
+          style={{ x: blob1X }}
         />
         <motion.div
-          className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-pink-600/10 blur-[80px] will-change-transform"
-          style={{ x: orb2X, y: orb2Y }}
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-0 -right-20 w-[420px] h-[420px] rounded-full bg-orange-600/50 blur-[120px] animate-blob-pulse"
+          style={{ x: blob2X }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-rose-500/05 blur-[60px] will-change-transform"
-          style={{ x: orb3X, y: orb3Y }}
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/3 right-1/4 w-[200px] h-[200px] rounded-full bg-yellow-200/30 blur-[80px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      {/* ═══════ STAR FIELD ═══════ */}
-      <div className="absolute inset-0 pointer-events-none">
-        {stars.map((star, i) => (
-          <div
-            key={`star-${i}`}
-            className="absolute star-particle"
-            style={{
-              top: star.top,
-              left: star.left,
-              width: star.size,
-              height: star.size,
-              backgroundColor: star.color,
-              ["--twinkle-duration" as string]: star.duration,
-              ["--twinkle-delay" as string]: star.delay,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* ═══════ GRID PATTERN OVERLAY ═══════ */}
+      {/* Main glass card (the big rounded rectangle in the reference) */}
       <motion.div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          x: gridX,
-          y: gridY,
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+        className="relative z-10 w-full max-w-[1280px]"
+        style={prefersReducedMotion ? {} : { x: cardX, y: cardY }}
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        <div className="glass-warm rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden">
+          {/* Inner highlight gloss (top edge) */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
 
-      {/* ═══════ DIAGONAL LIGHT SWEEP ═══════ */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-0 left-0 w-[200%] h-full light-sweep-bar"
-          style={{ transformOrigin: "center center" }}
-        />
-      </div>
-
-      {/* ═══════ FLOATING PARTICLES WITH MOUSE PARALLAX ═══════ */}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full will-change-transform"
-          style={{
-            top: `${15 + i * 15}%`,
-            left: `${8 + i * 18}%`,
-            x: particleX,
-            y: particleY,
-            width: i % 2 === 0 ? 3 : 2,
-            height: i % 2 === 0 ? 3 : 2,
-          }}
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0.1, 0.7, 0.1],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: 3 + i * 0.7,
-            repeat: Infinity,
-            delay: i * 0.4,
-          }}
-        >
-          <div
-            className={`w-full h-full rounded-full ${i % 3 === 0
-              ? "bg-purple-400/50"
-              : i % 3 === 1
-                ? "bg-pink-400/50"
-                : "bg-rose-400/40"
-              }`}
-          />
-        </motion.div>
-      ))}
-
-      {/* ═══════ CONTENT ═══════ */}
-      <div className="relative z-10 w-full px-6 sm:px-10 lg:px-16 xl:px-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left: Text Content */}
-          <div className="relative z-10">
-            {/* Badge with bounce entrance */}
+          {/* ═══════ TOP ROW: Logo + Pill Nav + Icons ═══════ */}
+          <div className="flex items-center justify-between mb-8 md:mb-10">
+            {/* Logo */}
             <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.2,
-                type: "spring",
-                bounce: 0.4,
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-purple-500/20 bg-purple-500/10 backdrop-blur-sm"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-2"
             >
-              <motion.div
-                animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Sparkles className="w-4 h-4 text-purple-400" />
-              </motion.div>
-              <span className="text-sm text-purple-300 font-medium">
-                Empowering Women with Skill-Based Learning
+              <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center shadow-md">
+                <Scissors className="w-4 h-4 text-orange-600" />
+              </div>
+              <span className="text-white font-bold tracking-wider text-sm md:text-base uppercase">
+                Kiruba <span className="font-light">Trust</span>
               </span>
             </motion.div>
 
-            {/* Heading with staggered letter-by-letter reveal */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-              <AnimatedLetters
-                text="Learn Skills"
-                className="text-white"
-                delay={0.5}
-              />
-              <AnimatedLetters
-                text="That Shape Your"
-                className="text-white"
-                delay={0.9}
-              />
-              {/* "Future!" with shimmer gradient */}
-              <motion.span
-                className="block shimmer-gradient"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 1.4,
-                  type: "spring",
-                  bounce: 0.3,
-                }}
-                style={{ display: "block" }}
-              >
-                <AnimatedLetters
-                  text="Future!"
-                  delay={1.5}
-                />
-              </motion.span>
-            </h1>
-
-            {/* Subheading */}
-            <motion.p
-              className="text-base sm:text-lg text-neutral-400 mb-8 leading-relaxed max-w-md"
-              initial={{ opacity: 0, y: 30 }}
+            {/* Pill navigation (centered) */}
+            <motion.nav
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="hidden md:flex items-center pill-nav px-2 py-1.5 gap-1"
             >
-              Explore free government-certified skill programs designed for
-              real-world success. Learn, create, and upskill with ₹12,000
-              stipend support.
-            </motion.p>
+              <Link
+                to="/"
+                className="pill-active px-5 py-2 text-sm"
+              >
+                HOME
+              </Link>
+              <Link to="/courses" className="pill-link px-5 py-2 text-sm">
+                COURSES
+              </Link>
+              <Link to="/about" className="pill-link px-5 py-2 text-sm">
+                ABOUT US
+              </Link>
+              <Link to="/contact" className="pill-link px-5 py-2 text-sm">
+                CONTACT
+              </Link>
+            </motion.nav>
 
-            {/* CTA Buttons */}
+            {/* Right-side icons */}
             <motion.div
-              className="flex flex-wrap gap-4 mb-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.2 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-2"
             >
-              <motion.div
-                whileHover={prefersReducedMotion ? {} : { scale: 1.03 }}
-                whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+              <button
+                aria-label="Enroll"
+                className="w-10 h-10 rounded-full bg-white/15 border border-white/25 text-white flex items-center justify-center hover:bg-white/25 transition"
               >
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold px-8 py-6 text-base shadow-lg shadow-purple-500/25 border-0 hover:shadow-xl hover:shadow-purple-500/30"
-                >
-                  <Link to="/courses">
-                    Browse Courses
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </motion.div>
-              <motion.div
-                whileHover={prefersReducedMotion ? {} : { scale: 1.03 }}
-                whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+                <GraduationCap className="w-4 h-4" />
+              </button>
+              <button
+                aria-label="Wishlist"
+                className="w-10 h-10 rounded-full bg-white/15 border border-white/25 text-white flex items-center justify-center hover:bg-white/25 transition"
               >
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full border border-white/10 text-neutral-300 hover:border-white/20 hover:text-white hover:bg-white/5 font-semibold px-8 py-6 text-base"
-                >
-                  <Link to="/about">Our Story</Link>
-                </Button>
-              </motion.div>
-            </motion.div>
-
-            {/* Stats Row */}
-            <motion.div
-              className="flex flex-wrap items-start gap-8 sm:gap-10"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 2.4 }}
-            >
-              {[
-                { number: "1000+", label: "Students Trained" },
-                { number: "14+", label: "Years of Service" },
-                { number: "₹12K", label: "Stipend Provided" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl sm:text-3xl font-extrabold text-white leading-none">
-                    {stat.number}
-                  </div>
-                  <div className="text-xs sm:text-sm text-neutral-500 mt-1 font-medium">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+                <Heart className="w-4 h-4" />
+              </button>
             </motion.div>
           </div>
 
-          {/* Right: Image + Floating Cards */}
-          <div className="relative flex justify-center lg:justify-end">
-            {/* Purple gradient blob behind image */}
-            <motion.div
-              className="absolute -top-10 -right-10 w-[110%] h-[110%] rounded-full bg-purple-600/15 blur-[80px]"
-              initial={prefersReducedMotion ? {} : { scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.6 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            />
+          {/* ═══════ MAIN HERO CONTENT: 3 columns ═══════ */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center min-h-[460px] md:min-h-[540px]">
+            {/* LEFT — Text */}
+            <div className="lg:col-span-4 order-2 lg:order-1 relative z-10">
+              {/* Left chevron (previous slide) */}
+              <div className="flex items-center gap-2 mb-6">
+                <button
+                  aria-label="Previous course"
+                  onClick={() =>
+                    setActive(
+                      (a) => (a - 1 + heroSlides.length) % heroSlides.length,
+                    )
+                  }
+                  className="chevron-btn"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  aria-label="Next course"
+                  onClick={() => setActive((a) => (a + 1) % heroSlides.length)}
+                  className="chevron-btn"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
 
-            {/* Hero Image */}
-            <motion.div
-              className="relative z-10 w-full max-w-[500px] xl:max-w-[560px]"
-              initial={prefersReducedMotion ? {} : { opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            >
-              <TiltCard tiltAmount={15}>
-                <img
-                  src={heroImage}
-                  alt="Skill training in progress"
-                  className="w-full h-[400px] sm:h-[460px] lg:h-[500px] object-cover rounded-3xl shadow-2xl shadow-purple-900/30 border border-white/10"
-                />
-              </TiltCard>
-            </motion.div>
+              <AnimatePresenceKey uniqueKey={slide.tag}>
+                <motion.div
+                  key={slide.tag}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="inline-flex items-center gap-1.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/90 mb-5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    {slide.eyebrow}
+                  </span>
 
-            {/* Floating Testimonial Card */}
-            <motion.div
-              className="absolute bottom-6 -left-4 sm:left-0 lg:-left-12 z-20"
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: [0, -10, 0] }}
-              transition={{
-                opacity: { duration: 0.6, delay: 0.8 },
-                y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }
-              }}
-            >
-              <div className="rounded-2xl px-5 py-4 max-w-[260px] bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] shadow-2xl">
-                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-white font-display font-bold leading-[0.98] tracking-tight text-5xl sm:text-6xl md:text-7xl mb-5">
+                    {slide.title}
+                    <br />
+                    <span className="italic font-semibold text-white/95 drop-shadow-[0_6px_20px_rgba(120,40,0,0.35)]">
+                      {slide.titleAccent}
+                    </span>
+                  </h1>
+
+                  <p className="text-white/85 text-sm md:text-[15px] leading-relaxed max-w-md mb-8 font-light">
+                    {slide.body}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Link to={slide.ctaTo} className="btn-warm-pill group">
+                      {slide.cta}
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    <div className="flex items-center gap-1.5 text-white/80 text-xs">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-3.5 h-3.5 fill-yellow-200 text-yellow-200"
+                          />
+                        ))}
+                      </div>
+                      <span className="font-medium">4.9 · 1000+ students</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresenceKey>
+            </div>
+
+            {/* CENTER — Hero image */}
+            <div className="lg:col-span-5 order-1 lg:order-2 flex items-center justify-center relative">
+              <AnimatePresenceKey uniqueKey={`img-${slide.tag}`}>
+                <motion.div
+                  key={`img-${slide.tag}`}
+                  className="relative"
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  style={prefersReducedMotion ? {} : { x: imgX, y: imgY }}
+                >
+                  {/* Soft glow disc behind image */}
+                  <div className="absolute inset-0 -z-10 blur-3xl bg-gradient-to-br from-yellow-200/40 via-orange-300/30 to-orange-500/30 rounded-full scale-110" />
+
                   <img
-                    src={mrFranklin}
-                    alt="Mr. Franklin"
-                    className="w-10 h-10 rounded-full object-cover ring-2 ring-purple-400/30"
+                    src={slide.image}
+                    alt={slide.tag}
+                    className="hero-image-shadow w-[260px] sm:w-[340px] md:w-[400px] lg:w-[440px] object-contain animate-floaty"
+                    style={{
+                      WebkitMaskImage:
+                        "linear-gradient(to bottom, black 85%, transparent 100%)",
+                      maskImage:
+                        "linear-gradient(to bottom, black 85%, transparent 100%)",
+                    }}
                   />
+
+                  {/* Small ground shadow */}
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[60%] h-6 bg-black/25 blur-2xl rounded-full" />
+                </motion.div>
+              </AnimatePresenceKey>
+
+              {/* Floating stats card */}
+              <motion.div
+                className="absolute -left-2 sm:left-4 top-10 md:top-16 z-20 hidden sm:block"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+              >
+                <div className="glass-warm-light rounded-2xl px-4 py-3 flex items-center gap-3 animate-floaty-slow">
+                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                    <Users className="w-5 h-5 text-orange-600" />
+                  </div>
                   <div>
-                    <p className="text-sm font-bold text-white">
-                      Mr. Franklin
+                    <p className="text-white font-bold text-base leading-none">
+                      1000+
                     </p>
-                    <p className="text-xs text-purple-400 font-medium">
-                      Director
+                    <p className="text-white/80 text-[11px] font-medium">
+                      Women Trained
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-0.5 mb-1.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400"
-                    />
-                  ))}
-                </div>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  "Transforming lives through free skill training. Highly
-                  recommended for beginners."
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Badge Card - Top Right */}
-            <motion.div
-              className="absolute top-8 -right-2 sm:right-4 z-20"
-              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1 }}
-            >
-              <div className="rounded-xl px-4 py-3 flex items-center gap-2 bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] shadow-lg">
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <Award className="w-4 h-4 text-green-400" />
+              {/* Floating certificate badge */}
+              <motion.div
+                className="absolute -right-2 sm:right-4 bottom-20 md:bottom-28 z-20 hidden sm:block"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.6 }}
+              >
+                <div className="glass-warm-light rounded-2xl px-4 py-3 flex items-center gap-3 animate-floaty">
+                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                    <Award className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-base leading-none">
+                      Govt.
+                    </p>
+                    <p className="text-white/80 text-[11px] font-medium">
+                      Certified
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-bold text-white">
-                    Govt. Certified
+              </motion.div>
+            </div>
+
+            {/* RIGHT — Price / chips */}
+            <div className="lg:col-span-3 order-3 flex lg:flex-col items-end lg:items-start justify-end lg:justify-start gap-6 relative z-10">
+              <AnimatePresenceKey uniqueKey={`price-${slide.tag}`}>
+                <motion.div
+                  key={`price-${slide.tag}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  className="text-right lg:text-left"
+                >
+                  <p className="text-white/70 text-xs uppercase tracking-widest font-semibold mb-1">
+                    Course Fee
                   </p>
-                  <p className="text-[10px] text-neutral-500">
-                    Naan Mudhalvan
+                  <div className="flex items-baseline gap-3 justify-end lg:justify-start">
+                    <span className="text-white font-display font-bold text-4xl md:text-5xl">
+                      {slide.price}
+                    </span>
+                    <span className="price-old text-lg md:text-xl font-medium">
+                      {slide.priceOld}
+                    </span>
+                  </div>
+                  <p className="text-white/70 text-xs mt-1">
+                    ₹12,000 stipend included
                   </p>
-                </div>
+                </motion.div>
+              </AnimatePresenceKey>
+
+              {/* Chips (size selector re-themed as course-duration chips like reference) */}
+              <AnimatePresenceKey uniqueKey={`chips-${slide.tag}`}>
+                <motion.div
+                  key={`chips-${slide.tag}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="flex gap-3"
+                >
+                  {slide.chips.map((c, i) => (
+                    <button
+                      key={c}
+                      className={`size-chip ${i === 0 ? "active" : ""}`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </motion.div>
+              </AnimatePresenceKey>
+
+              {/* Slide indicators */}
+              <div className="hidden lg:flex gap-2 mt-auto pt-6">
+                {heroSlides.map((s, i) => (
+                  <button
+                    key={s.tag}
+                    onClick={() => setActive(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === active
+                        ? "w-8 bg-white"
+                        : "w-4 bg-white/40 hover:bg-white/60"
+                    }`}
+                    aria-label={`Go to ${s.tag}`}
+                  />
+                ))}
               </div>
-            </motion.div>
+            </div>
+          </div>
+
+          {/* ═══════ BOTTOM ROW: Socials + Tagline + Thumbnail ═══════ */}
+          <div className="mt-6 md:mt-8 flex items-center justify-between gap-4">
+            {/* Social icons (left) */}
+            <div className="flex items-center gap-1">
+              {[
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Youtube, label: "YouTube" },
+              ].map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="social-btn"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+
+            {/* Tagline (center) */}
+            <AnimatePresenceKey uniqueKey={`tag-${slide.tag}`}>
+              <motion.p
+                key={`tag-${slide.tag}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="hero-tagline text-center text-base md:text-lg lg:text-xl hidden sm:block flex-1"
+              >
+                {slide.tagline}
+              </motion.p>
+            </AnimatePresenceKey>
+
+            {/* Thumbnail course preview (right) — mini sewing icon */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() =>
+                  setActive((a) => (a + 1) % heroSlides.length)
+                }
+                className="hidden md:flex items-center gap-2 rounded-2xl bg-white/15 border border-white/25 backdrop-blur px-3 py-2 hover:bg-white/25 transition"
+              >
+                <img
+                  src={
+                    heroSlides[(active + 1) % heroSlides.length].image
+                  }
+                  alt="Next course"
+                  className="w-10 h-10 rounded-lg object-cover"
+                />
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-wider text-white/70 font-semibold leading-none">
+                    Next up
+                  </p>
+                  <p className="text-white text-xs font-bold leading-tight mt-0.5">
+                    {heroSlides[(active + 1) % heroSlides.length].tag}
+                  </p>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-neutral-500"
-        >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <ArrowDown className="w-4 h-4" />
-        </motion.div>
+        {/* Small mobile slide dots */}
+        <div className="flex lg:hidden justify-center gap-2 mt-6">
+          {heroSlides.map((s, i) => (
+            <button
+              key={s.tag}
+              onClick={() => setActive(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === active ? "w-8 bg-white" : "w-4 bg-white/50"
+              }`}
+              aria-label={`Go to ${s.tag}`}
+            />
+          ))}
+        </div>
       </motion.div>
     </section>
+  );
+}
+
+function AnimatePresenceKey({
+  children,
+  uniqueKey,
+}: {
+  children: React.ReactNode;
+  uniqueKey: string;
+}) {
+  return (
+    <AnimatePresence mode="wait">
+      <div key={uniqueKey}>{children}</div>
+    </AnimatePresence>
   );
 }

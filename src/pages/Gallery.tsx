@@ -65,7 +65,7 @@ const Gallery = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto">
               <AnimatedSection>
@@ -139,7 +139,7 @@ const Gallery = () => {
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+              className="fixed inset-0 z-50 bg-[#fff6e8]/90 flex items-center justify-center p-4"
               onClick={() => setSelectedImage(null)}
               initial={prefersReducedMotion ? {} : { opacity: 0 }}
               animate={{ opacity: 1 }}

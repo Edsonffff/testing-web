@@ -415,7 +415,7 @@ function Infrastructure() {
                       className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-sm font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -455,7 +455,7 @@ function Infrastructure() {
                       className="w-full aspect-square object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{facility.name}</p>
+                      <p className="text-orange-950 text-sm font-medium">{facility.name}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -516,7 +516,7 @@ function Infrastructure() {
                       className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-sm font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -601,7 +601,7 @@ function Infrastructure() {
                       className="w-full aspect-square object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                      <p className="text-white text-xs font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-xs font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -648,7 +648,7 @@ function Infrastructure() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-[#fff6e8]/90 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -660,7 +660,7 @@ function Infrastructure() {
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+                className="absolute -top-12 right-0 text-orange-950 hover:text-gray-300 transition-colors"
               >
                 <X className="w-8 h-8" />
               </button>
@@ -669,7 +669,7 @@ function Infrastructure() {
                 alt={selectedImage.caption}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
               />
-              <p className="text-white text-center mt-4 text-lg font-medium">
+              <p className="text-orange-950 text-center mt-4 text-lg font-medium">
                 {selectedImage.caption}
               </p>
             </motion.div>

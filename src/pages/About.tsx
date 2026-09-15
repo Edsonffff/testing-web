@@ -21,7 +21,7 @@ const About = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto">
               <AnimatedText as="h1" zoom className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
@@ -67,7 +67,7 @@ const About = () => {
         </section>
 
         {/* Director's Message */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
@@ -176,7 +176,7 @@ const About = () => {
         </section>
 
         {/* Timeline */}
-        <section className="section-padding bg-secondary">
+        <section className="section-padding bg-[#fff1dc]">
           <div className="container-width">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <AnimatedSection>

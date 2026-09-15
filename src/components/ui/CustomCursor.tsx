@@ -9,7 +9,7 @@ function getIsDesktop() {
 }
 
 function subscribeToNothing() {
-    return () => { };
+    return () => {};
 }
 
 export function CustomCursor() {
@@ -48,14 +48,12 @@ export function CustomCursor() {
             cursorX.set(e.clientX);
             cursorY.set(e.clientY);
         };
-
         const handleMouseDown = () => {
             if (mountedRef.current) setIsClicking(true);
         };
         const handleMouseUp = () => {
             if (mountedRef.current) setIsClicking(false);
         };
-
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (
@@ -68,7 +66,6 @@ export function CustomCursor() {
                 if (mountedRef.current) setIsHovering(true);
             }
         };
-
         const handleMouseOut = () => {
             if (mountedRef.current) setIsHovering(false);
         };
@@ -92,7 +89,7 @@ export function CustomCursor() {
 
     return (
         <>
-            {/* Glow trail (slowest, largest) */}
+            {/* Glow trail */}
             <motion.div
                 className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-screen"
                 style={{
@@ -104,16 +101,16 @@ export function CustomCursor() {
                 }}
             >
                 <motion.div
-                    className="rounded-full bg-purple-500/10 blur-xl"
+                    className="rounded-full bg-orange-500/20 blur-xl"
                     animate={{
-                        width: isHovering ? 120 : 60,
-                        height: isHovering ? 120 : 60,
+                        width: isHovering ? 120 : 70,
+                        height: isHovering ? 120 : 70,
                     }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                 />
             </motion.div>
 
-            {/* Outer ring (trails behind cursor) */}
+            {/* Outer ring */}
             <motion.div
                 className="fixed top-0 left-0 pointer-events-none z-[9999]"
                 style={{
@@ -125,19 +122,19 @@ export function CustomCursor() {
                 }}
             >
                 <motion.div
-                    className="rounded-full border border-purple-400/40"
+                    className="rounded-full border border-amber-200/60"
                     animate={{
-                        width: isHovering ? 50 : isClicking ? 24 : 32,
-                        height: isHovering ? 50 : isClicking ? 24 : 32,
+                        width: isHovering ? 50 : isClicking ? 24 : 34,
+                        height: isHovering ? 50 : isClicking ? 24 : 34,
                         borderColor: isHovering
-                            ? "rgba(192, 132, 252, 0.6)"
-                            : "rgba(192, 132, 252, 0.3)",
+                            ? "rgba(255,255,255,0.9)"
+                            : "rgba(255,220,150,0.5)",
                     }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                 />
             </motion.div>
 
-            {/* Inner dot (follows cursor exactly) */}
+            {/* Inner dot */}
             <motion.div
                 className="fixed top-0 left-0 pointer-events-none z-[9999]"
                 style={{
@@ -149,11 +146,10 @@ export function CustomCursor() {
                 }}
             >
                 <motion.div
-                    className="rounded-full bg-gradient-to-r from-purple-400 to-pink-400"
+                    className="rounded-full bg-gradient-to-r from-amber-200 to-orange-400 shadow-[0_0_12px_rgba(255,160,50,0.8)]"
                     animate={{
-                        width: isHovering ? 8 : isClicking ? 12 : 6,
-                        height: isHovering ? 8 : isClicking ? 12 : 6,
-                        opacity: isClicking ? 1 : 0.9,
+                        width: isHovering ? 8 : isClicking ? 12 : 7,
+                        height: isHovering ? 8 : isClicking ? 12 : 7,
                     }}
                     transition={{ duration: 0.15, ease: "easeOut" }}
                 />

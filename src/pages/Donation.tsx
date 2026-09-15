@@ -214,7 +214,7 @@ const Donation = () => {
         </section>
 
         {/* Impact Section */}
-        <section className="section-padding bg-secondary/30">
+        <section className="section-padding bg-[#fff1dc]/30">
           <div className="container-width">
             <AnimatedText
               as="h2"
@@ -296,7 +296,7 @@ const Donation = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-white text-sm font-medium">
+                      <p className="text-orange-950 text-sm font-medium">
                         {image.caption}
                       </p>
                     </div>
@@ -311,7 +311,7 @@ const Donation = () => {
         <AnimatePresence>
           {lightboxOpen && (
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-[#fff6e8]/90 p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -320,9 +320,9 @@ const Donation = () => {
               <button
                 onClick={closeLightbox}
                 aria-label="Close"
-                className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute top-4 right-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-orange-950" />
               </button>
 
               <button
@@ -331,9 +331,9 @@ const Donation = () => {
                   prevImage();
                 }}
                 aria-label="Previous image"
-                className="absolute left-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute left-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-orange-950" />
               </button>
 
               <button
@@ -342,9 +342,9 @@ const Donation = () => {
                   nextImage();
                 }}
                 aria-label="Next image"
-                className="absolute right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute right-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="w-6 h-6 text-orange-950" />
               </button>
 
               <motion.div
@@ -359,7 +359,7 @@ const Donation = () => {
                   alt={galleryImages[currentImageIndex].caption}
                   className="max-w-full max-h-[80vh] rounded-lg object-contain"
                 />
-                <p className="text-white text-center mt-4 text-lg">
+                <p className="text-orange-950 text-center mt-4 text-lg">
                   {galleryImages[currentImageIndex].caption}
                 </p>
               </motion.div>
@@ -424,7 +424,7 @@ const Donation = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-4 bg-secondary/50 rounded-lg">
+                      <div className="p-4 bg-[#fff1dc]/50 rounded-lg">
                         <p className="text-sm text-muted-foreground mb-1">
                           Account Name
                         </p>
@@ -434,13 +434,13 @@ const Donation = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-secondary/50 rounded-lg">
+                        <div className="p-4 bg-[#fff1dc]/50 rounded-lg">
                           <p className="text-sm text-muted-foreground mb-1">
                             Bank Name
                           </p>
                           <p className="font-semibold text-foreground">Canara Bank</p>
                         </div>
-                        <div className="p-4 bg-secondary/50 rounded-lg">
+                        <div className="p-4 bg-[#fff1dc]/50 rounded-lg">
                           <p className="text-sm text-muted-foreground mb-1">
                             Branch
                           </p>
@@ -448,7 +448,7 @@ const Donation = () => {
                         </div>
                       </div>
 
-                      <div className="p-4 bg-secondary/50 rounded-lg flex items-center justify-between">
+                      <div className="p-4 bg-[#fff1dc]/50 rounded-lg flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">
                             Account Number
@@ -467,7 +467,7 @@ const Donation = () => {
                         </Button>
                       </div>
 
-                      <div className="p-4 bg-secondary/50 rounded-lg flex items-center justify-between">
+                      <div className="p-4 bg-[#fff1dc]/50 rounded-lg flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">
                             IFSC Code
@@ -556,7 +556,7 @@ const Donation = () => {
         </section>
 
         {/* Footer Note */}
-        <section className="py-8 bg-secondary/50">
+        <section className="py-8 bg-[#fff1dc]/50">
           <div className="container-width text-center">
             <AnimatedText
               as="p"
