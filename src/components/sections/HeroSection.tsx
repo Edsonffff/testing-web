@@ -4,7 +4,6 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  ShoppingBag,
   Heart,
   Instagram,
   Facebook,
@@ -13,8 +12,6 @@ import {
   Sparkles,
   Star,
   GraduationCap,
-  Users,
-  Award,
 } from "lucide-react";
 import {
   motion,
@@ -24,19 +21,24 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import heroImage from "@/assets/hero-tailoring.jpg";
 import tailoringCourse from "@/assets/tailoring-course.jpg";
 import aariWork from "@/assets/aari-work.jpg";
+import juteWork from "@/assets/jute-work.jpg";
 import beautician from "@/assets/beautician-course.png";
 
+/* ══════════════════════════════════════════
+   4 cinematic product states with their
+   own theme colors — matching Jacket Masters.
+   ══════════════════════════════════════════ */
 const heroSlides = [
   {
+    id: "tailoring",
     tag: "Tailoring",
     eyebrow: "FREE GOVT. CERTIFIED COURSE",
     title: "Stitch your",
     titleAccent: "Dream Career",
     body:
-      "It's not just about needle and thread. It's about stepping into confidence, creativity, and a craft that lasts a lifetime. Learn professional tailoring with ₹12,000 stipend support.",
+      "Professional tailoring from basics to boutique-grade. Learn to cut, stitch and style — with a ₹12,000 government stipend and a certificate that opens doors.",
     cta: "Start Stitching",
     ctaTo: "/courses",
     image: tailoringCourse,
@@ -44,14 +46,57 @@ const heroSlides = [
     price: "Free",
     priceOld: "₹15,000",
     chips: ["6", "Months", "Certified"],
+    // Rich orange/brown — the original reference
+    theme: {
+      bgOuter: ["#ff5c00", "#ff7a1a", "#ff9f2e", "#ffc34d"],
+      cardFrom: "rgba(210, 95, 20, 0.55)",
+      cardVia: "rgba(180, 70, 10, 0.50)",
+      cardTo: "rgba(140, 45, 5, 0.55)",
+      glow: "rgba(255, 170, 60, 0.55)",
+      glow2: "rgba(255, 120, 20, 0.40)",
+      blob1: "rgba(255, 200, 90, 0.45)",
+      blob2: "rgba(200, 70, 0, 0.55)",
+      accentText: "#fff6e8",
+      chipActive: "#c2410c",
+    },
   },
   {
+    id: "beautician",
+    tag: "Beautician",
+    eyebrow: "BEAUTY & WELLNESS",
+    title: "Glow up",
+    titleAccent: "Your Future",
+    body:
+      "From bridal makeup to salon management — master skin, hair and spa techniques under expert trainers. Graduate with a government certificate and your own studio-ready skills.",
+    cta: "Join Beauty",
+    ctaTo: "/courses",
+    image: beautician,
+    tagline: "Confidence, stitched into every lesson",
+    price: "Free",
+    priceOld: "₹18,000",
+    chips: ["6", "Months", "Studio"],
+    // Soft warm cream / pink-white — the "white jacket" reference
+    theme: {
+      bgOuter: ["#f5d6c6", "#f6c4b3", "#fae1d1", "#ffe8d8"],
+      cardFrom: "rgba(230, 150, 140, 0.35)",
+      cardVia: "rgba(210, 130, 130, 0.28)",
+      cardTo: "rgba(200, 120, 125, 0.30)",
+      glow: "rgba(255, 220, 210, 0.65)",
+      glow2: "rgba(255, 180, 180, 0.35)",
+      blob1: "rgba(255, 230, 220, 0.55)",
+      blob2: "rgba(230, 150, 150, 0.30)",
+      accentText: "#3a1a1a",
+      chipActive: "#8a2e3a",
+    },
+  },
+  {
+    id: "aari",
     tag: "Aari Work",
     eyebrow: "TRADITIONAL ARTISTRY",
     title: "Design with",
     titleAccent: "Golden Hands",
     body:
-      "Master the timeless art of bridal aari, zardosi and bead embroidery. Turn fabric into heirlooms and passion into a profession with expert mentorship.",
+      "Master the timeless art of bridal aari, zardosi and beadwork. Turn silk and thread into heirlooms — and turn your talent into a thriving boutique business.",
     cta: "Explore Aari",
     ctaTo: "/courses",
     image: aariWork,
@@ -59,40 +104,70 @@ const heroSlides = [
     price: "Free",
     priceOld: "₹12,000",
     chips: ["3", "Months", "Bridal"],
+    // Muted rose / pink — the "red jacket" reference
+    theme: {
+      bgOuter: ["#b84a4a", "#c95258", "#d06a6a", "#e08787"],
+      cardFrom: "rgba(130, 40, 55, 0.50)",
+      cardVia: "rgba(110, 30, 50, 0.45)",
+      cardTo: "rgba(90, 25, 40, 0.50)",
+      glow: "rgba(255, 120, 130, 0.55)",
+      glow2: "rgba(220, 80, 100, 0.35)",
+      blob1: "rgba(255, 180, 180, 0.35)",
+      blob2: "rgba(140, 30, 50, 0.55)",
+      accentText: "#fff0f0",
+      chipActive: "#7a1f33",
+    },
   },
   {
-    tag: "Beautician",
-    eyebrow: "BEAUTY & WELLNESS",
-    title: "Glow up",
-    titleAccent: "Your Future",
+    id: "jute",
+    tag: "Jute Work",
+    eyebrow: "ECO-FRIENDLY CRAFT",
+    title: "Weave a",
+    titleAccent: "Green Future",
     body:
-      "Professional beautician training covering skin, hair, makeup and salon management. Walk out with a government certificate and the confidence to launch your own studio.",
-    cta: "Join Beauty",
+      "Turn natural jute fibre into bags, decor and lifestyle products. Learn sustainable design and entrepreneurship — build a business that's kind to the planet.",
+    cta: "Discover Jute",
     ctaTo: "/courses",
-    image: beautician,
-    tagline: "Confidence, stitched into every lesson",
+    image: juteWork,
+    tagline: "Natural craft, timeless living",
     price: "Free",
-    priceOld: "₹18,000",
-    chips: ["6", "Months", "Studio-Ready"],
+    priceOld: "₹10,000",
+    chips: ["3", "Months", "Eco-Skill"],
+    // Dark charcoal — the "black jacket" reference
+    theme: {
+      bgOuter: ["#2a2320", "#3a302a", "#4a4038", "#5a5048"],
+      cardFrom: "rgba(35, 30, 28, 0.70)",
+      cardVia: "rgba(25, 22, 20, 0.65)",
+      cardTo: "rgba(15, 12, 10, 0.70)",
+      glow: "rgba(200, 170, 130, 0.25)",
+      glow2: "rgba(150, 120, 80, 0.20)",
+      blob1: "rgba(100, 85, 70, 0.50)",
+      blob2: "rgba(20, 15, 10, 0.60)",
+      accentText: "#f5ece0",
+      chipActive: "#1a1512",
+    },
   },
 ];
+
+// Cinematic easing
+const CINEMATIC = [0.22, 1, 0.36, 1] as const;
+const TRANSITION_DUR = 0.9;
 
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Mouse parallax
+  const slide = heroSlides[active];
+
+  // Mouse parallax (very subtle for premium feel)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { damping: 50, stiffness: 90 });
-  const smoothY = useSpring(mouseY, { damping: 50, stiffness: 90 });
-  const imgX = useTransform(smoothX, [-0.5, 0.5], [-15, 15]);
-  const imgY = useTransform(smoothY, [-0.5, 0.5], [-12, 12]);
-  const cardX = useTransform(smoothX, [-0.5, 0.5], [8, -8]);
-  const cardY = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
-  const blob1X = useTransform(smoothX, [-0.5, 0.5], [-25, 25]);
-  const blob2X = useTransform(smoothX, [-0.5, 0.5], [20, -20]);
+  const smoothX = useSpring(mouseX, { damping: 80, stiffness: 120 });
+  const smoothY = useSpring(mouseY, { damping: 80, stiffness: 120 });
+  const imgX = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
+  const imgY = useTransform(smoothY, [-0.5, 0.5], [-6, 6]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!sectionRef.current) return;
@@ -101,55 +176,111 @@ export function HeroSection() {
     mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
-  // Auto rotate slides gently
+  const goTo = (idx: number) => {
+    setDirection(idx > active ? 1 : -1);
+    setActive((idx + heroSlides.length) % heroSlides.length);
+  };
+
+  const next = () => goTo(active + 1);
+  const prev = () => goTo(active - 1);
+
   useEffect(() => {
     if (prefersReducedMotion) return;
-    const t = setInterval(() => {
-      setActive((a) => (a + 1) % heroSlides.length);
-    }, 7000);
+    const t = setInterval(next, 6500);
     return () => clearInterval(t);
-  }, [prefersReducedMotion]);
-
-  const slide = heroSlides[active];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, prefersReducedMotion]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center warm-gradient-bg overflow-hidden pt-28 pb-16 px-4 sm:px-6 lg:px-10"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16 px-4 sm:px-6 lg:px-10"
       onMouseMove={handleMouseMove}
     >
-      {/* Decorative floating blobs for depth */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* ═══════ OUTER BACKGROUND — color-morphing gradient ═══════ */}
+      <AnimatePresence initial={false}>
         <motion.div
-          className="absolute -top-24 -left-24 w-[380px] h-[380px] rounded-full bg-amber-300/40 blur-[100px] animate-blob-pulse"
-          style={{ x: blob1X }}
+          key={`bg-${slide.id}`}
+          className="absolute inset-0 -z-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: TRANSITION_DUR, ease: CINEMATIC }}
+          style={{
+            background: `radial-gradient(ellipse at 20% 0%, ${slide.theme.bgOuter[0]} 0%, transparent 55%),
+                         radial-gradient(ellipse at 80% 10%, ${slide.theme.bgOuter[1]} 0%, transparent 50%),
+                         linear-gradient(180deg, ${slide.theme.bgOuter[0]} 0%, ${slide.theme.bgOuter[1]} 35%, ${slide.theme.bgOuter[2]} 65%, ${slide.theme.bgOuter[3]} 100%)`,
+          }}
         />
+      </AnimatePresence>
+      {/* Bottom light wash always present */}
+      <div className="pointer-events-none absolute inset-0 -z-0">
         <motion.div
-          className="absolute bottom-0 -right-20 w-[420px] h-[420px] rounded-full bg-orange-600/50 blur-[120px] animate-blob-pulse"
-          style={{ x: blob2X }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-1/4 w-[200px] h-[200px] rounded-full bg-yellow-200/30 blur-[80px]"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-x-0 bottom-0 h-1/2"
+          animate={{ opacity: [0.5, 0.7, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background: `radial-gradient(circle at 50% 100%, ${slide.theme.blob1} 0%, transparent 60%)`,
+          }}
         />
       </div>
 
-      {/* Main glass card (the big rounded rectangle in the reference) */}
+      {/* ═══════ GLASS CENTER CARD — color-morphs with slide ═══════ */}
       <motion.div
         className="relative z-10 w-full max-w-[1280px]"
-        style={prefersReducedMotion ? {} : { x: cardX, y: cardY }}
         initial={{ opacity: 0, y: 30, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.9, ease: CINEMATIC }}
       >
-        <div className="glass-warm rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden">
-          {/* Inner highlight gloss (top edge) */}
+        <motion.div
+          className="relative overflow-hidden rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 lg:p-12"
+          style={{
+            background: `linear-gradient(135deg, ${slide.theme.cardFrom} 0%, ${slide.theme.cardVia} 50%, ${slide.theme.cardTo} 100%)`,
+            backdropFilter: "blur(28px) saturate(140%)",
+            WebkitBackdropFilter: "blur(28px) saturate(140%)",
+            border: "1px solid rgba(255,220,170,0.22)",
+            boxShadow:
+              "0 40px 80px -20px rgba(30,10,0,0.45), 0 20px 40px -15px rgba(30,10,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)",
+          }}
+          animate={{
+            boxShadow: [
+              "0 40px 80px -20px rgba(30,10,0,0.45), 0 20px 40px -15px rgba(30,10,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)",
+              "0 45px 90px -20px rgba(30,10,0,0.50), 0 25px 45px -15px rgba(30,10,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)",
+              "0 40px 80px -20px rgba(30,10,0,0.45), 0 20px 40px -15px rgba(30,10,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)",
+            ],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {/* Top gloss highlight */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
 
-          {/* ═══════ TOP ROW: Logo + Pill Nav + Icons ═══════ */}
-          <div className="flex items-center justify-between mb-8 md:mb-10">
-            {/* Logo */}
+          {/* Decorative animated blobs inside card (color-morph) */}
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={`blob-in-${slide.id}`}
+              className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: TRANSITION_DUR, ease: CINEMATIC }}
+            >
+              <motion.div
+                className="absolute -top-16 -left-16 w-80 h-80 rounded-full blur-[90px] animate-blob-pulse"
+                style={{ background: slide.theme.blob1 }}
+              />
+              <motion.div
+                className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full blur-[100px] animate-blob-pulse"
+                style={{ background: slide.theme.blob2, animationDelay: "2s" }}
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* ═══════ TOP ROW — stays stable, only text color tweens ═══════ */}
+          <motion.div
+            className="relative z-20 flex items-center justify-between mb-6 md:mb-8"
+            animate={{ color: slide.theme.accentText }}
+            transition={{ duration: TRANSITION_DUR, ease: CINEMATIC }}
+          >
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -159,36 +290,44 @@ export function HeroSection() {
               <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center shadow-md">
                 <Scissors className="w-4 h-4 text-orange-600" />
               </div>
-              <span className="text-white font-bold tracking-wider text-sm md:text-base uppercase">
+              <span className="font-bold tracking-wider text-sm md:text-base uppercase text-white drop-shadow-sm">
                 Kiruba <span className="font-light">Trust</span>
               </span>
             </motion.div>
 
-            {/* Pill navigation (centered) */}
             <motion.nav
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="hidden md:flex items-center pill-nav px-2 py-1.5 gap-1"
+              className="hidden md:flex items-center rounded-full px-2 py-1.5 gap-1"
+              style={{
+                background: "rgba(30,15,0,0.35)",
+                backdropFilter: "blur(20px) saturate(150%)",
+                WebkitBackdropFilter: "blur(20px) saturate(150%)",
+                border: "1px solid rgba(255,200,150,0.2)",
+                boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+              }}
             >
-              <Link
-                to="/"
-                className="pill-active px-5 py-2 text-sm"
-              >
-                HOME
-              </Link>
-              <Link to="/courses" className="pill-link px-5 py-2 text-sm">
-                COURSES
-              </Link>
-              <Link to="/about" className="pill-link px-5 py-2 text-sm">
-                ABOUT US
-              </Link>
-              <Link to="/contact" className="pill-link px-5 py-2 text-sm">
-                CONTACT
-              </Link>
+              {[
+                { name: "HOME", to: "/" },
+                { name: "COURSES", to: "/courses" },
+                { name: "ABOUT US", to: "/about" },
+                { name: "CONTACT", to: "/contact" },
+              ].map((l, i) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={`px-5 py-2 text-sm rounded-full transition-all duration-300 ${
+                    i === 0
+                      ? "bg-white text-neutral-900 font-bold shadow-md"
+                      : "text-white/85 hover:text-white hover:bg-white/15 font-semibold"
+                  }`}
+                >
+                  {l.name}
+                </Link>
+              ))}
             </motion.nav>
 
-            {/* Right-side icons */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -208,51 +347,56 @@ export function HeroSection() {
                 <Heart className="w-4 h-4" />
               </button>
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* ═══════ MAIN HERO CONTENT: 3 columns ═══════ */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center min-h-[460px] md:min-h-[540px]">
-            {/* LEFT — Text */}
-            <div className="lg:col-span-4 order-2 lg:order-1 relative z-10">
-              {/* Left chevron (previous slide) */}
+          {/* ═══════ MAIN 3-COLUMN LAYOUT ═══════ */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center min-h-[420px] md:min-h-[520px]">
+            {/* LEFT — text (crossfades in place, no movement) */}
+            <div className="lg:col-span-5 order-2 lg:order-1 relative text-white">
               <div className="flex items-center gap-2 mb-6">
                 <button
                   aria-label="Previous course"
-                  onClick={() =>
-                    setActive(
-                      (a) => (a - 1 + heroSlides.length) % heroSlides.length,
-                    )
-                  }
-                  className="chevron-btn"
+                  onClick={prev}
+                  className="w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/20"
+                  style={{
+                    background: "rgba(255,255,255,0.12)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    color: "rgba(255,255,255,0.9)",
+                  }}
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   aria-label="Next course"
-                  onClick={() => setActive((a) => (a + 1) % heroSlides.length)}
-                  className="chevron-btn"
+                  onClick={next}
+                  className="w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/20"
+                  style={{
+                    background: "rgba(255,255,255,0.12)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    color: "rgba(255,255,255,0.9)",
+                  }}
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
 
-              <AnimatePresenceKey uniqueKey={slide.tag}>
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={slide.tag}
-                  initial={{ opacity: 0, y: 16 }}
+                  key={slide.id}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.55, ease: CINEMATIC }}
                 >
                   <span className="inline-flex items-center gap-1.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/90 mb-5">
                     <Sparkles className="w-3.5 h-3.5" />
                     {slide.eyebrow}
                   </span>
 
-                  <h1 className="text-white font-display font-bold leading-[0.98] tracking-tight text-5xl sm:text-6xl md:text-7xl mb-5">
+                  <h1 className="font-display font-bold leading-[0.95] tracking-tight text-5xl sm:text-6xl md:text-7xl mb-5 drop-shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
                     {slide.title}
                     <br />
-                    <span className="italic font-semibold text-white/95 drop-shadow-[0_6px_20px_rgba(120,40,0,0.35)]">
+                    <span className="italic font-semibold text-white">
                       {slide.titleAccent}
                     </span>
                   </h1>
@@ -279,155 +423,160 @@ export function HeroSection() {
                     </div>
                   </div>
                 </motion.div>
-              </AnimatePresenceKey>
+              </AnimatePresence>
             </div>
 
-            {/* CENTER — Hero image */}
-            <div className="lg:col-span-5 order-1 lg:order-2 flex items-center justify-center relative">
-              <AnimatePresenceKey uniqueKey={`img-${slide.tag}`}>
+            {/* CENTER — product (cinematic fade+scale+Y transition) */}
+            <div className="lg:col-span-4 order-1 lg:order-2 flex items-center justify-center relative h-[260px] sm:h-[320px] md:h-[400px] lg:h-[460px]">
+              {/* Color glow disc behind product (morphs color) */}
+              <AnimatePresence initial={false}>
                 <motion.div
-                  key={`img-${slide.tag}`}
-                  className="relative"
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  style={prefersReducedMotion ? {} : { x: imgX, y: imgY }}
+                  key={`glow-${slide.id}`}
+                  className="absolute inset-0 -z-10"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.1 }}
+                  transition={{ duration: TRANSITION_DUR, ease: CINEMATIC }}
                 >
-                  {/* Soft glow disc behind image */}
-                  <div className="absolute inset-0 -z-10 blur-3xl bg-gradient-to-br from-yellow-200/40 via-orange-300/30 to-orange-500/30 rounded-full scale-110" />
+                  <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] rounded-full blur-3xl"
+                    style={{
+                      background: `radial-gradient(circle, ${slide.theme.glow} 0%, ${slide.theme.glow2} 40%, transparent 75%)`,
+                    }}
+                  />
+                </motion.div>
+              </AnimatePresence>
 
-                  <img
+              {/* Product image with cinematic transition */}
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={`img-${slide.id}`}
+                  custom={direction}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.85,
+                    y: 40,
+                    filter: "blur(12px)",
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 1.1,
+                    y: -40,
+                    filter: "blur(8px)",
+                  }}
+                  transition={{ duration: TRANSITION_DUR, ease: CINEMATIC }}
+                  style={prefersReducedMotion ? {} : { x: imgX, y: imgY }}
+                  className="relative flex items-center justify-center w-full h-full"
+                >
+                  <motion.img
                     src={slide.image}
                     alt={slide.tag}
-                    className="hero-image-shadow w-[260px] sm:w-[340px] md:w-[400px] lg:w-[440px] object-contain animate-floaty"
+                    className="object-contain w-[240px] sm:w-[300px] md:w-[380px] lg:w-[430px] max-h-full"
                     style={{
                       WebkitMaskImage:
-                        "linear-gradient(to bottom, black 85%, transparent 100%)",
+                        "linear-gradient(to bottom, black 82%, transparent 96%)",
                       maskImage:
-                        "linear-gradient(to bottom, black 85%, transparent 100%)",
+                        "linear-gradient(to bottom, black 82%, transparent 96%)",
+                      filter: "drop-shadow(0 30px 40px rgba(0,0,0,0.35))",
+                    }}
+                    animate={{ y: [0, -6, 0], rotate: [0, 0.4, 0] }}
+                    transition={{
+                      y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+                      rotate: { duration: 7, repeat: Infinity, ease: "easeInOut" },
                     }}
                   />
 
-                  {/* Small ground shadow */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[60%] h-6 bg-black/25 blur-2xl rounded-full" />
+                  {/* Ground shadow (also morphs) */}
+                  <motion.div
+                    className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[55%] h-4 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, transparent 70%)",
+                      filter: "blur(8px)",
+                    }}
+                    animate={{ opacity: [0.8, 0.6, 0.8], scale: [1, 1.05, 1] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  />
                 </motion.div>
-              </AnimatePresenceKey>
-
-              {/* Floating stats card */}
-              <motion.div
-                className="absolute -left-2 sm:left-4 top-10 md:top-16 z-20 hidden sm:block"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-              >
-                <div className="glass-warm-light rounded-2xl px-4 py-3 flex items-center gap-3 animate-floaty-slow">
-                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                    <Users className="w-5 h-5 text-orange-600" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-base leading-none">
-                      1000+
-                    </p>
-                    <p className="text-white/80 text-[11px] font-medium">
-                      Women Trained
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Floating certificate badge */}
-              <motion.div
-                className="absolute -right-2 sm:right-4 bottom-20 md:bottom-28 z-20 hidden sm:block"
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.6 }}
-              >
-                <div className="glass-warm-light rounded-2xl px-4 py-3 flex items-center gap-3 animate-floaty">
-                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                    <Award className="w-5 h-5 text-orange-600" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-base leading-none">
-                      Govt.
-                    </p>
-                    <p className="text-white/80 text-[11px] font-medium">
-                      Certified
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* RIGHT — Price / chips */}
-            <div className="lg:col-span-3 order-3 flex lg:flex-col items-end lg:items-start justify-end lg:justify-start gap-6 relative z-10">
-              <AnimatePresenceKey uniqueKey={`price-${slide.tag}`}>
+            {/* RIGHT — price/chips (crossfades in place) */}
+            <div className="lg:col-span-3 order-3 relative z-10 flex flex-col items-start gap-4 text-white">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={`price-${slide.tag}`}
-                  initial={{ opacity: 0, x: 20 }}
+                  key={`price-${slide.id}`}
+                  initial={{ opacity: 0, x: 14 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-right lg:text-left"
+                  transition={{ duration: 0.55, ease: CINEMATIC }}
+                  className="text-left w-full"
                 >
-                  <p className="text-white/70 text-xs uppercase tracking-widest font-semibold mb-1">
+                  <p className="text-white/70 text-xs uppercase tracking-[0.22em] font-bold mb-2">
                     Course Fee
                   </p>
-                  <div className="flex items-baseline gap-3 justify-end lg:justify-start">
-                    <span className="text-white font-display font-bold text-4xl md:text-5xl">
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <span className="font-display font-bold text-5xl md:text-6xl leading-none drop-shadow-sm">
                       {slide.price}
                     </span>
-                    <span className="price-old text-lg md:text-xl font-medium">
+                    <span
+                      className="text-lg md:text-xl font-medium"
+                      style={{
+                        color: "rgba(255,230,200,0.65)",
+                        textDecoration: "line-through",
+                        textDecorationThickness: "2px",
+                        textDecorationColor: "rgba(255,230,200,0.5)",
+                      }}
+                    >
                       {slide.priceOld}
                     </span>
                   </div>
-                  <p className="text-white/70 text-xs mt-1">
-                    ₹12,000 stipend included
+                  <p className="text-white/80 text-sm mt-2 font-medium">
+                    with ₹12,000 stipend
                   </p>
                 </motion.div>
-              </AnimatePresenceKey>
+              </AnimatePresence>
 
-              {/* Chips (size selector re-themed as course-duration chips like reference) */}
-              <AnimatePresenceKey uniqueKey={`chips-${slide.tag}`}>
-                <motion.div
-                  key={`chips-${slide.tag}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="flex gap-3"
-                >
-                  {slide.chips.map((c, i) => (
-                    <button
-                      key={c}
-                      className={`size-chip ${i === 0 ? "active" : ""}`}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </motion.div>
-              </AnimatePresenceKey>
-
-              {/* Slide indicators */}
-              <div className="hidden lg:flex gap-2 mt-auto pt-6">
-                {heroSlides.map((s, i) => (
-                  <button
-                    key={s.tag}
-                    onClick={() => setActive(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === active
-                        ? "w-8 bg-white"
-                        : "w-4 bg-white/40 hover:bg-white/60"
-                    }`}
-                    aria-label={`Go to ${s.tag}`}
-                  />
-                ))}
+              <div className="w-full">
+                <p className="text-white/70 text-xs uppercase tracking-[0.22em] font-bold mb-3">
+                  Duration
+                </p>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`chips-${slide.id}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: CINEMATIC }}
+                    className="flex gap-2.5 flex-wrap"
+                  >
+                    {slide.chips.map((c, i) => (
+                      <button
+                        key={c}
+                        className={`h-[52px] px-4 min-w-[52px] rounded-full inline-flex items-center justify-center font-bold text-[0.95rem] transition-all duration-300 backdrop-blur ${
+                          i === 0
+                            ? "bg-white shadow-[0_10px_25px_-8px_rgba(0,0,0,0.35)]"
+                            : "bg-white/15 text-white/90 border border-white/25 hover:bg-white/25"
+                        }`}
+                        style={i === 0 ? { color: slide.theme.chipActive } : {}}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>
 
-          {/* ═══════ BOTTOM ROW: Socials + Tagline + Thumbnail ═══════ */}
-          <div className="mt-6 md:mt-8 flex items-center justify-between gap-4">
-            {/* Social icons (left) */}
+          {/* ═══════ BOTTOM ROW: socials | tagline | next-thumbnail ═══════ */}
+          <div className="relative z-10 mt-6 md:mt-8 flex items-center justify-between gap-4 text-white">
             <div className="flex items-center gap-1">
               {[
                 { Icon: Instagram, label: "Instagram" },
@@ -438,62 +587,64 @@ export function HeroSection() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="social-btn"
+                  className="w-9 h-9 rounded-full inline-flex items-center justify-center text-white/80 hover:text-white hover:bg-white/15 transition"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
 
-            {/* Tagline (center) */}
-            <AnimatePresenceKey uniqueKey={`tag-${slide.tag}`}>
+            <AnimatePresence mode="wait">
               <motion.p
-                key={`tag-${slide.tag}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+                key={`tag-${slide.id}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.5, ease: CINEMATIC }}
                 className="hero-tagline text-center text-base md:text-lg lg:text-xl hidden sm:block flex-1"
               >
                 {slide.tagline}
               </motion.p>
-            </AnimatePresenceKey>
+            </AnimatePresence>
 
-            {/* Thumbnail course preview (right) — mini sewing icon */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() =>
-                  setActive((a) => (a + 1) % heroSlides.length)
-                }
-                className="hidden md:flex items-center gap-2 rounded-2xl bg-white/15 border border-white/25 backdrop-blur px-3 py-2 hover:bg-white/25 transition"
-              >
-                <img
-                  src={
-                    heroSlides[(active + 1) % heroSlides.length].image
-                  }
-                  alt="Next course"
-                  className="w-10 h-10 rounded-lg object-cover"
-                />
-                <div className="text-left">
-                  <p className="text-[10px] uppercase tracking-wider text-white/70 font-semibold leading-none">
-                    Next up
-                  </p>
-                  <p className="text-white text-xs font-bold leading-tight mt-0.5">
-                    {heroSlides[(active + 1) % heroSlides.length].tag}
-                  </p>
-                </div>
-              </button>
-            </div>
+            {/* Next-product thumbnail — updates per slide like the reference */}
+            <button
+              onClick={next}
+              className="hidden md:flex items-center gap-3 rounded-2xl bg-white/15 border border-white/25 backdrop-blur px-3 py-2 hover:bg-white/25 transition group"
+            >
+              <div className="w-11 h-11 rounded-xl overflow-hidden bg-white/20 flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={`thumb-${heroSlides[(active + 1) % heroSlides.length].id}`}
+                    src={heroSlides[(active + 1) % heroSlides.length].image}
+                    alt="Next course"
+                    className="w-full h-full object-cover"
+                    initial={{ opacity: 0, scale: 1.15 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5, ease: CINEMATIC }}
+                  />
+                </AnimatePresence>
+              </div>
+              <div className="text-left pr-1">
+                <p className="text-[10px] uppercase tracking-wider text-white/70 font-bold leading-none">
+                  Next up
+                </p>
+                <p className="text-white text-xs font-bold leading-tight mt-0.5 group-hover:translate-x-0.5 transition-transform">
+                  {heroSlides[(active + 1) % heroSlides.length].tag}
+                </p>
+              </div>
+            </button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Small mobile slide dots */}
+        {/* Mobile slide dots */}
         <div className="flex lg:hidden justify-center gap-2 mt-6">
           {heroSlides.map((s, i) => (
             <button
-              key={s.tag}
-              onClick={() => setActive(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              key={s.id}
+              onClick={() => goTo(i)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
                 i === active ? "w-8 bg-white" : "w-4 bg-white/50"
               }`}
               aria-label={`Go to ${s.tag}`}
@@ -502,19 +653,5 @@ export function HeroSection() {
         </div>
       </motion.div>
     </section>
-  );
-}
-
-function AnimatePresenceKey({
-  children,
-  uniqueKey,
-}: {
-  children: React.ReactNode;
-  uniqueKey: string;
-}) {
-  return (
-    <AnimatePresence mode="wait">
-      <div key={uniqueKey}>{children}</div>
-    </AnimatePresence>
   );
 }

@@ -238,36 +238,43 @@
 
 /* Size-selector chip (like 36/38/40 in reference) */
 .size-chip {
-  width: 52px;
-  height: 52px;
+  min-width: 56px;
+  height: 56px;
+  padding: 0 14px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 0.95rem;
-  transition: all 0.25s ease;
-  background: rgba(60, 25, 0, 0.35);
-  color: rgba(255, 240, 220, 0.75);
-  border: 1px solid rgba(255, 200, 150, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 245, 225, 0.95);
+  border: 1px solid rgba(255, 220, 170, 0.3);
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
 }
 
 .size-chip:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.3);
   color: #ffffff;
+  transform: translateY(-2px);
 }
 
 .size-chip.active {
   background: #ffffff;
-  color: #1a0f00;
-  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+  color: #c2410c;
+  box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.35);
+  border-color: #ffffff;
+  transform: translateY(-2px);
 }
 
 /* Price strikethrough */
 .price-old {
-  color: rgba(255, 230, 200, 0.6);
+  color: rgba(255, 230, 200, 0.7);
   text-decoration: line-through;
   text-decoration-thickness: 2px;
+  text-decoration-color: rgba(255, 230, 200, 0.55);
 }
 
 /* ═══════════════════════════════════════════
