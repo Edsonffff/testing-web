@@ -153,10 +153,11 @@ function Infrastructure() {
     <Layout>
       <PageTransition>
         {/* Hero Section */}
-        <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-gradient-to-br from-primary/10 via-background to-success/10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjI1MjkiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-          
-          <div className="container-width section-padding relative z-10">
+        <section className="relative bg-[#fff6e8] overflow-hidden fabric-texture">
+          <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/15 blur-[100px]" />
+          <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-amber-300/20 blur-[100px]" />
+
+          <div className="container-width section-hero relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <AnimatedSection delay={0.1}>
                 <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
@@ -177,7 +178,7 @@ function Infrastructure() {
         </section>
 
         {/* Organization Overview */}
-        <section className="section-padding bg-card">
+        <section className="section-padding bg-white">
           <div className="container-width">
             <AnimatedSection>
               <h2 className="text-3xl font-display font-bold text-center mb-12">Organization Overview</h2>
@@ -258,7 +259,7 @@ function Infrastructure() {
             </AnimatedSection>
             
             <div className="grid md:grid-cols-2 gap-8">
-              <AnimatedCard delay={0.1} className="bg-card rounded-xl p-8 border border-border shadow-sm">
+              <AnimatedCard delay={0.1} className="warm-card rounded-2xl p-8 border border-border shadow-sm">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primary" />
@@ -274,7 +275,7 @@ function Infrastructure() {
                 </div>
               </AnimatedCard>
 
-              <AnimatedCard delay={0.2} className="bg-card rounded-xl p-8 border border-border shadow-sm">
+              <AnimatedCard delay={0.2} className="warm-card rounded-2xl p-8 border border-border shadow-sm">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center">
                     <Phone className="w-6 h-6 text-success" />
@@ -324,7 +325,7 @@ function Infrastructure() {
         </section>
 
         {/* Training Programs */}
-        <section className="section-padding bg-card">
+        <section className="section-padding bg-white">
           <div className="container-width">
             <AnimatedSection>
               <h2 className="text-3xl font-display font-bold text-center mb-4">Training Programs Offered</h2>
@@ -362,7 +363,7 @@ function Infrastructure() {
             
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               {/* Stats */}
-              <AnimatedCard delay={0.1} className="bg-card rounded-xl p-8 border border-border shadow-sm">
+              <AnimatedCard delay={0.1} className="warm-card rounded-2xl p-8 border border-border shadow-sm">
                 <h3 className="text-xl font-semibold mb-6">Infrastructure Overview</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {infrastructureStats.map((stat, index) => (
@@ -375,7 +376,7 @@ function Infrastructure() {
               </AnimatedCard>
 
               {/* Additional Facilities */}
-              <AnimatedCard delay={0.2} className="bg-card rounded-xl p-8 border border-border shadow-sm">
+              <AnimatedCard delay={0.2} className="warm-card rounded-2xl p-8 border border-border shadow-sm">
                 <h3 className="text-xl font-semibold mb-6">Additional Facilities</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {facilities.map((facility, index) => (
@@ -415,7 +416,7 @@ function Infrastructure() {
                       className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-sm font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -425,7 +426,7 @@ function Infrastructure() {
         </section>
 
         {/* Practical Training Facilities */}
-        <section className="section-padding bg-card">
+        <section className="section-padding bg-white">
           <div className="container-width">
             <AnimatedSection>
               <h2 className="text-3xl font-display font-bold text-center mb-4">Practical Training Facilities</h2>
@@ -455,7 +456,7 @@ function Infrastructure() {
                       className="w-full aspect-square object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{facility.name}</p>
+                      <p className="text-orange-950 text-sm font-medium">{facility.name}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -479,7 +480,7 @@ function Infrastructure() {
                 <AnimatedCard 
                   key={feature.name} 
                   delay={0.05 + index * 0.03}
-                  className="bg-card rounded-xl p-4 border border-border shadow-sm flex items-center gap-3"
+                  className="warm-card rounded-2xl p-5 border border-border shadow-sm flex items-center gap-3"
                 >
                   <div className="w-10 h-10 bg-success/10 rounded-full flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-5 h-5 text-success" />
@@ -516,7 +517,7 @@ function Infrastructure() {
                       className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-white text-sm font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-sm font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -526,7 +527,7 @@ function Infrastructure() {
         </section>
 
         {/* Government & Scheme Compliance */}
-        <section className="section-padding bg-card">
+        <section className="section-padding bg-white">
           <div className="container-width">
             <AnimatedSection>
               <h2 className="text-3xl font-display font-bold text-center mb-4">Government & Scheme Compliance</h2>
@@ -601,7 +602,7 @@ function Infrastructure() {
                       className="w-full aspect-square object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                      <p className="text-white text-xs font-medium">{item.caption}</p>
+                      <p className="text-orange-950 text-xs font-medium">{item.caption}</p>
                     </div>
                   </motion.div>
                 </AnimatedCard>
@@ -648,7 +649,7 @@ function Infrastructure() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-[#fff6e8]/90 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -660,7 +661,7 @@ function Infrastructure() {
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+                className="absolute -top-12 right-0 text-orange-950 hover:text-gray-300 transition-colors"
               >
                 <X className="w-8 h-8" />
               </button>
@@ -669,7 +670,7 @@ function Infrastructure() {
                 alt={selectedImage.caption}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
               />
-              <p className="text-white text-center mt-4 text-lg font-medium">
+              <p className="text-orange-950 text-center mt-4 text-lg font-medium">
                 {selectedImage.caption}
               </p>
             </motion.div>

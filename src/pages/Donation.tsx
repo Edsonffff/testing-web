@@ -141,44 +141,42 @@ const Donation = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="relative py-20 md:py-28 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-          <div className="container-width section-padding relative">
+        <section className="relative bg-[#fff6e8] overflow-hidden fabric-texture">
+          <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/15 blur-[100px]" />
+          <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-rose-400/15 blur-[100px]" />
+          <div className="container-width section-hero relative z-10">
             <div className="max-w-3xl mx-auto text-center">
-              <AnimatedSection delay={0.1}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-                  <Heart className="w-4 h-4" />
-                  <span>Support Our Mission</span>
-                </div>
-              </AnimatedSection>
+              <div className="warm-badge inline-block mb-6">
+                <Heart className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />
+                Support Our Mission
+              </div>
 
               <AnimatedText
                 as="h1"
                 delay={0.2}
                 zoom
-                className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight"
+                className="text-4xl md:text-6xl font-display font-bold text-orange-950 mb-6 leading-[1.05]"
               >
                 Donate to{" "}
-                <span className="text-primary">
-                  Kiruba Education & Charitable Trust
+                <span className="text-gradient-warm italic">
+                  Kiruba Trust
                 </span>
               </AnimatedText>
 
               <AnimatedText
                 as="p"
                 delay={0.3}
-                className="text-lg text-muted-foreground leading-relaxed"
+                className="text-lg md:text-xl text-orange-900/75 leading-relaxed"
               >
-                Your contribution helps us continue our mission of empowering
-                underprivileged communities through education, healthcare, and
-                skill development in Kanyakumari District, Tamil Nadu.
+                Your contribution helps us empower underprivileged communities
+                through education, healthcare, and skill development in Kanyakumari.
               </AnimatedText>
             </div>
           </div>
         </section>
 
         {/* Introduction Section */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="max-w-4xl mx-auto">
               <AnimatedCard className="p-8 md:p-10 bg-card rounded-2xl shadow-lg border border-border">
@@ -214,7 +212,7 @@ const Donation = () => {
         </section>
 
         {/* Impact Section */}
-        <section className="section-padding bg-secondary/30">
+        <section className="section-padding bg-[#fff6e8]/30">
           <div className="container-width">
             <AnimatedText
               as="h2"
@@ -238,7 +236,7 @@ const Donation = () => {
                 <AnimatedCard
                   key={item.title}
                   delay={index * 0.1}
-                  className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-md transition-shadow"
+                  className="warm-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -260,7 +258,7 @@ const Donation = () => {
         </section>
 
         {/* Gallery Section */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <AnimatedText
               as="h2"
@@ -296,7 +294,7 @@ const Donation = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-white text-sm font-medium">
+                      <p className="text-orange-950 text-sm font-medium">
                         {image.caption}
                       </p>
                     </div>
@@ -311,7 +309,7 @@ const Donation = () => {
         <AnimatePresence>
           {lightboxOpen && (
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-[#fff6e8]/90 p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -320,9 +318,9 @@ const Donation = () => {
               <button
                 onClick={closeLightbox}
                 aria-label="Close"
-                className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute top-4 right-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-orange-950" />
               </button>
 
               <button
@@ -331,9 +329,9 @@ const Donation = () => {
                   prevImage();
                 }}
                 aria-label="Previous image"
-                className="absolute left-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute left-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-orange-950" />
               </button>
 
               <button
@@ -342,9 +340,9 @@ const Donation = () => {
                   nextImage();
                 }}
                 aria-label="Next image"
-                className="absolute right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+                className="absolute right-4 p-2 bg-white hover:bg-white/20 rounded-full transition-colors z-10"
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="w-6 h-6 text-orange-950" />
               </button>
 
               <motion.div
@@ -359,7 +357,7 @@ const Donation = () => {
                   alt={galleryImages[currentImageIndex].caption}
                   className="max-w-full max-h-[80vh] rounded-lg object-contain"
                 />
-                <p className="text-white text-center mt-4 text-lg">
+                <p className="text-orange-950 text-center mt-4 text-lg">
                   {galleryImages[currentImageIndex].caption}
                 </p>
               </motion.div>
@@ -424,7 +422,7 @@ const Donation = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-4 bg-secondary/50 rounded-lg">
+                      <div className="p-4 bg-[#fff6e8]/50 rounded-lg">
                         <p className="text-sm text-muted-foreground mb-1">
                           Account Name
                         </p>
@@ -434,13 +432,13 @@ const Donation = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-secondary/50 rounded-lg">
+                        <div className="p-4 bg-[#fff6e8]/50 rounded-lg">
                           <p className="text-sm text-muted-foreground mb-1">
                             Bank Name
                           </p>
                           <p className="font-semibold text-foreground">Canara Bank</p>
                         </div>
-                        <div className="p-4 bg-secondary/50 rounded-lg">
+                        <div className="p-4 bg-[#fff6e8]/50 rounded-lg">
                           <p className="text-sm text-muted-foreground mb-1">
                             Branch
                           </p>
@@ -448,7 +446,7 @@ const Donation = () => {
                         </div>
                       </div>
 
-                      <div className="p-4 bg-secondary/50 rounded-lg flex items-center justify-between">
+                      <div className="p-4 bg-[#fff6e8]/50 rounded-lg flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">
                             Account Number
@@ -467,7 +465,7 @@ const Donation = () => {
                         </Button>
                       </div>
 
-                      <div className="p-4 bg-secondary/50 rounded-lg flex items-center justify-between">
+                      <div className="p-4 bg-[#fff6e8]/50 rounded-lg flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground mb-1">
                             IFSC Code
@@ -556,7 +554,7 @@ const Donation = () => {
         </section>
 
         {/* Footer Note */}
-        <section className="py-8 bg-secondary/50">
+        <section className="py-8 bg-[#fff6e8]/50">
           <div className="container-width text-center">
             <AnimatedText
               as="p"

@@ -65,20 +65,22 @@ const Gallery = () => {
     <PageTransition>
       <Layout>
         {/* Hero Section */}
-        <section className="section-padding bg-secondary">
-          <div className="container-width">
+        <section className="relative bg-[#fff6e8] overflow-hidden fabric-texture">
+          <div className="absolute top-0 -left-20 w-[320px] h-[320px] rounded-full bg-orange-400/15 blur-[100px]" />
+          <div className="absolute bottom-0 -right-20 w-[320px] h-[320px] rounded-full bg-amber-300/20 blur-[100px]" />
+          <div className="container-width section-hero relative z-10">
             <div className="text-center max-w-3xl mx-auto">
               <AnimatedSection>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-                  <Camera className="w-4 h-4" />
+                <div className="warm-badge inline-block mb-6">
+                  <Camera className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />
                   <span>Our Training in Action</span>
                 </div>
               </AnimatedSection>
-              <AnimatedText as="h1" delay={0.1} zoom className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6">
-                Photo <span className="text-primary">Gallery</span>
+              <AnimatedText as="h1" delay={0.1} zoom className="text-4xl md:text-6xl font-display font-bold text-orange-950 mb-6 leading-[1.05]">
+                Photo <span className="text-gradient-warm italic">Gallery</span>
               </AnimatedText>
-              <AnimatedText as="p" delay={0.2} className="text-lg text-muted-foreground">
-                Glimpses of our skill development programs, training sessions, and 
+              <AnimatedText as="p" delay={0.2} className="text-lg md:text-xl text-orange-900/75 leading-relaxed">
+                Glimpses of our skill development programs, training sessions, and
                 certificate distribution ceremonies.
               </AnimatedText>
             </div>
@@ -86,7 +88,7 @@ const Gallery = () => {
         </section>
 
         {/* Gallery Sections */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-[#fff6e8]">
           <div className="container-width">
             <div className="space-y-16">
               {galleryCategories.map((category, categoryIndex) => (
@@ -139,7 +141,7 @@ const Gallery = () => {
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+              className="fixed inset-0 z-50 bg-[#fff6e8]/90 flex items-center justify-center p-4"
               onClick={() => setSelectedImage(null)}
               initial={prefersReducedMotion ? {} : { opacity: 0 }}
               animate={{ opacity: 1 }}

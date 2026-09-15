@@ -1,38 +1,64 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Heart } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Facebook,
+  Instagram,
+  Youtube,
+  Heart,
+  Scissors,
+} from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { AnimatedSection } from "@/components/animations";
 import logo from "@/assets/logo.jpeg";
 
 export function Footer() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <footer className="relative bg-neutral-950 text-white overflow-hidden">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-purple-600/5 blur-[150px]" />
-      <div className="container-width px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="relative bg-gradient-to-b from-orange-950 to-[#2a1305] text-white overflow-hidden">
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-orange-500/10 blur-[150px]" />
+      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full bg-amber-500/10 blur-[120px]" />
+
+      <div className="container-width px-4 sm:px-6 lg:px-8 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* About */}
-          <AnimatedSection delay={0} className="lg:col-span-1">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-1"
+          >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg shadow-purple-500/10">
+              <div className="w-12 h-12 rounded-full overflow-hidden shadow-xl ring-2 ring-orange-400/40">
                 <img src={logo} alt="Kiruba Trust Logo" className="w-full h-full object-cover" />
               </div>
               <div>
-                <h3 className="text-lg font-bold">Kiruba Trust</h3>
-                <p className="text-sm text-purple-300">Education & Charity</p>
+                <h3 className="text-lg font-display font-bold">Kiruba Trust</h3>
+                <p className="text-sm text-amber-300/90 font-semibold tracking-wide uppercase">
+                  Education & Charity
+                </p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
+            <p className="text-sm text-orange-100/70 leading-relaxed">
               Empowering women and youth through free skill development programs
               since 2011. Over 1000+ students have benefited from our
               initiatives. (Govt. Regd No: 42/2011)
             </p>
-          </AnimatedSection>
+          </motion.div>
 
           {/* Quick Links */}
-          <AnimatedSection delay={0.1}>
-            <h4 className="font-bold text-lg mb-6">Quick Links</h4>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h4 className="font-display font-bold text-lg mb-6 flex items-center gap-2">
+              <Scissors className="w-4 h-4 text-amber-400" />
+              Quick Links
+            </h4>
             <ul className="space-y-3">
               {[
                 { name: "Home", path: "/" },
@@ -46,73 +72,85 @@ export function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-gray-400 hover:text-purple-400 transition-colors"
+                    className="text-sm text-orange-100/70 hover:text-amber-300 transition-colors font-medium"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </AnimatedSection>
+          </motion.div>
 
           {/* Programs */}
-          <AnimatedSection delay={0.2}>
-            <h4 className="font-bold text-lg mb-6">Our Programs</h4>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h4 className="font-display font-bold text-lg mb-6">Our Programs</h4>
             <ul className="space-y-3">
               {[
                 "Free Tailoring Course",
                 "Broadband Technician Course",
                 "Aari Work Training",
                 "Jute Work Training",
+                "Beautician Course",
               ].map((program) => (
                 <li key={program}>
-                  <span className="text-sm text-gray-400">{program}</span>
+                  <span className="text-sm text-orange-100/70 font-medium">
+                    {program}
+                  </span>
                 </li>
               ))}
             </ul>
-          </AnimatedSection>
+          </motion.div>
 
           {/* Contact */}
-          <AnimatedSection delay={0.3}>
-            <h4 className="font-bold text-lg mb-6">Contact Us</h4>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h4 className="font-display font-bold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
-                <span className="text-sm text-gray-400">
+                <MapPin className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                <span className="text-sm text-orange-100/70">
                   Kalladimamoodu Junction, Cherupaloor, Kulasekharam, Tamil Nadu
                   – 629161
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-purple-400 shrink-0" />
-                <div className="text-sm text-gray-400">
+                <Phone className="w-5 h-5 text-amber-400 shrink-0" />
+                <div className="text-sm text-orange-100/70">
                   <a
                     href="tel:9442301105"
-                    className="hover:text-purple-400 transition-colors"
+                    className="hover:text-amber-300 transition-colors font-medium"
                   >
                     9442301105
                   </a>
                   {" / "}
                   <a
                     href="tel:9443801105"
-                    className="hover:text-purple-400 transition-colors"
+                    className="hover:text-amber-300 transition-colors font-medium"
                   >
                     9443801105
                   </a>
                 </div>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-purple-400 shrink-0" />
+                <Mail className="w-5 h-5 text-amber-400 shrink-0" />
                 <a
                   href="mailto:kecttrust@gmail.com"
-                  className="text-sm text-gray-400 hover:text-purple-400 transition-colors"
+                  className="text-sm text-orange-100/70 hover:text-amber-300 transition-colors font-medium"
                 >
                   kecttrust@gmail.com
                 </a>
               </li>
             </ul>
 
-            {/* Social Icons */}
             <div className="flex items-center gap-3 mt-6">
               {[
                 {
@@ -136,7 +174,7 @@ export function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-gray-800 hover:bg-purple-600 flex items-center justify-center transition-all duration-200"
+                  className="w-10 h-10 rounded-full bg-orange-800/50 border border-orange-700/50 hover:bg-gradient-to-br hover:from-orange-500 hover:to-amber-500 hover:border-transparent flex items-center justify-center transition-all duration-300"
                   aria-label={social.label}
                   whileHover={prefersReducedMotion ? {} : { scale: 1.1, y: -2 }}
                   whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
@@ -145,24 +183,29 @@ export function Footer() {
                 </motion.a>
               ))}
             </div>
-          </AnimatedSection>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
-        <AnimatedSection delay={0.4}>
-          <div className="mt-12 pt-8 border-t border-gray-800">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-gray-500">
-                © {new Date().getFullYear()} Kiruba Education & Charitable
-                Trust. All rights reserved.
-              </p>
-              <p className="text-sm text-gray-500 flex items-center gap-1">
-                Made with <Heart className="w-3 h-3 text-purple-500 fill-purple-500" /> in
-                Tamil Nadu
-              </p>
-            </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12 pt-8 border-t border-orange-800/50"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-orange-100/60">
+              © {new Date().getFullYear()} Kiruba Education & Charitable
+              Trust. All rights reserved.
+            </p>
+            <p className="text-sm text-orange-100/60 flex items-center gap-1">
+              Made with{" "}
+              <Heart className="w-3 h-3 text-amber-400 fill-amber-400" /> in
+              Tamil Nadu
+            </p>
           </div>
-        </AnimatedSection>
+        </motion.div>
       </div>
     </footer>
   );
